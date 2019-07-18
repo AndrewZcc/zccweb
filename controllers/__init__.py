@@ -1,0 +1,13 @@
+#!/usr/bin/python3
+# -*- encoding: utf-8 -*-
+
+from controllers.main import *
+
+DEFAULT_BLUEPRINT = [
+    [main, '']
+]
+
+
+def config_blueprint(app):
+    for each in DEFAULT_BLUEPRINT:
+        app.register_blueprint(each[0], url_prefix=each[1])

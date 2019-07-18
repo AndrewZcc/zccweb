@@ -1,0 +1,19 @@
+body {
+	background: #f3f3f3;
+}
+
+.content {
+	padding-left: 30px;
+	margin: 10px auto;
+	overflow: hidden;
+}
+
+.form-container{
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+.form-content {
+	width: 360px;
+	margin: 0 auto;
+}
