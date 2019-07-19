@@ -2,8 +2,10 @@
 
 {% block title %}首页{% endblock %}
 
+{% block link %}{% endblock %}
+
 {% block content %}
-<div class="row">
+<div class="row" style="margin-left: 20px;">
 	<p>这是首页 from {{ session.get('username') }}</p>
 </div>
 {% endblock %}

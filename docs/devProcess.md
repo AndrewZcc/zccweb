@@ -11,6 +11,17 @@
     - 建议 首次运行新项目用 `app.run(host='127.0.0.1', port='8090')` 先尝试运行，如果该端口已被占用，使用该命令会提供报错信息！
 
 
+3. 如何让sidebar左侧边栏导航在垂直方向全尺寸拉伸？
+
+    https://blog.csdn.net/qq_35393869/article/details/88043093
+    
+    ```css
+    ✖️height: calc(100% - 10px);
+    ✔️height: calc(100vh - 48px);
+    ```
+
+4. 注意：一定要好好学会利用 div 以及 float:left 左悬浮标签！
+
 ---
 
 ## 参考教程

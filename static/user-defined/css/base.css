@@ -2,10 +2,36 @@ body {
 	background: #f3f3f3;
 }
 
+.navbar {
+	margin-bottom: 0;
+}
+
+.nav li.active{
+	background-color: #e7e7e7;
+}
+
+.navbar-brand {
+	width: 150px;
+}
+
+#wrapper {
+	height: 100%;
+}
+
+#side-menu {
+	background-color: #f8f8f8;
+	width: 150px;
+	height: calc(100vh - 48px);
+	float: left;
+	font-size: 105%;
+}
+
+#page-wrapper {
+	margin: 0 auto;
+}
+
 .content {
 	background: #fff;
-	padding-left: 30px;
-	margin: 10px auto;
 	overflow: hidden;
 }
 
