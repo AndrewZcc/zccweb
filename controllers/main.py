@@ -4,12 +4,13 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for
 from models.user_model import db, User
 from models.book_model import Book, Author, Year
+from models.poetry_model import Poetry, Poeter, PoetryCategory
 from sqlalchemy import and_
 
 main = Blueprint('main', __name__)
 
 
-def init_db():
+def init_book_db():
     book1 = Book(title='平凡的世界')
     book2 = Book(title='人生')
     book3 = Book(title='活着')
@@ -48,17 +49,10 @@ def init_db():
 
 @main.route('/')
 def index():
-    #init_db()
+    #init_book_db()
 
-    years = Year.query.filter().all()
-    books = Book.query.filter().all()
-
-    dicts = {
-        'years': years,
-        'books': books
-    }
-
-    return render_template('reading.html', **dicts)
+    #return redirect(url_for('main.reading'))
+    return redirect(url_for('main.poetry'))
 
 
 @main.route('/login/', methods=['GET', 'POST'])
@@ -114,6 +108,102 @@ def register():
                 return redirect(url_for('main.index'))
 
 
+# TODO: 使用 全局 g 对象
+# TODO: 向全局传递 selected_navbar, years, poetry_categories 信息
+# TODO: base.html 可通过访问 g对象 动态生成 侧边栏！
+# TODO: 替代方案：使用 session (不推荐)！
+
+
+@main.route('/reading/')
+def reading():
+    years = Year.query.filter().all()
+    books = Book.query.filter().all()
+
+    dicts = {
+        'years': years,
+        'books': books
+    }
+
+    return render_template('reading.html', **dicts)
+
+
+def init_poetry_db():
+    poetry1 = Poetry(title='忠诚')
+    poetry2 = Poetry(title='致橡树')
+    poetry3 = Poetry(title='雨巷')
+    poetry4 = Poetry(title='念奴娇·赤壁怀古')
+
+    poet1 = Poeter(name='何达', state='香港')
+    poet2 = Poeter(name='舒婷')
+    poet3 = Poeter(name='戴望舒')
+    poet4 = Poeter(name='苏轼', state='北宋')
+
+    cat1 = PoetryCategory(name='现代诗')
+    cat2 = PoetryCategory(name='宋词')
+    cat3 = PoetryCategory(name='唐诗')
+    cat4 = PoetryCategory(name='古诗')
+
+    poetry1.poet = poet1
+    poetry2.poet = poet2
+    poetry3.poet = poet3
+    poetry4.poet = poet4
+
+    poetry1.categories.append(cat1)
+    poetry2.categories.append(cat1)
+    poetry3.categories.append(cat1)
+    poetry4.categories.append(cat2)
+
+    db.session.add_all([poetry1, poetry2, poetry3, poetry4])
+    db.session.add_all([poet1, poet2, poet3, poet4])
+    db.session.add_all([cat1, cat2, cat3, cat4])
+    db.session.commit()
+
+
 @main.route('/poetry/')
 def poetry():
-    return render_template('poetry.html')
+    # init_poetry_db()
+
+    cat_list = PoetryCategory.query.filter().all()
+    poetries_list = []
+    for cat in cat_list:
+        poetries = cat.poetries
+        poetries_list.append(poetries)
+
+    dicts = {
+        'cat_list': cat_list,
+        'poetries_list': poetries_list
+    }
+    return render_template('poetry.html', **dicts)
+
+
+@main.route('/poetry/category/<poet_catid>/')
+def poetry_cat(poet_catid):
+    cat = PoetryCategory.query.filter(PoetryCategory.id == int(poet_catid)).first()
+    poetries = cat.poetries
+
+    cat_list = []
+    cat_list.append(cat)
+    poetries_list = []
+    poetries_list.append(poetries)
+
+    dicts = {
+        'cat_list': cat_list,
+        'poetries_list': poetries_list
+    }
+    return render_template('poetry.html', **dicts)
+
+
+@main.route('/poetry/<poetry_id>/')
+def poetry_detail(poetry_id):
+    poetry_local = Poetry.query.filter(Poetry.id == int(poetry_id)).first()
+    title = poetry_local.title
+    if poetry_local.content_path:
+        md_data = '## 有内容 path = %s' % poetry_local.content_path
+    else:
+        md_data = '## 该文档不存在！'
+
+    dicts = {
+        'title': title,
+        'md_data': md_data
+    }
+    return render_template('poetry/detail.html', **dicts)

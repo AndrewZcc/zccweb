@@ -11,6 +11,7 @@ from models.user_model import db
 
 from models.user_model import User
 from models.book_model import Book, Author, Year
+from models.poetry_model import Poeter, Poetry, PoetryCategory
 
 manager = Manager(app)
 
