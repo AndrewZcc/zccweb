@@ -6,12 +6,24 @@ body {
 	margin-bottom: 0;
 }
 
+.navbar-brand {
+	font-size: 140%;
+	font-weight: bold;
+}
+
+.mainNavLi {
+	width: 100px;
+	font-size: 110%;
+	font-weight: bold;
+}
+
 .nav li.active{
 	background-color: #e7e7e7;
 }
 
-.navbar-brand {
-	width: 150px;
+.nav-tabs {
+	margin-top: 8px;
+	border: 0 solid transparent;
 }
 
 #wrapper {
@@ -20,7 +32,7 @@ body {
 
 #side-menu {
 	background-color: #f8f8f8;
-	width: 150px;
+	width: 200px;
 	height: calc(100vh - 48px);
 	float: left;
 	font-size: 105%;
@@ -32,6 +44,7 @@ body {
 
 .content {
 	background: #fff;
+	margin: 0 auto;
 	overflow: hidden;
 }
 

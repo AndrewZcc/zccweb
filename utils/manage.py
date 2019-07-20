@@ -7,7 +7,10 @@ from flask_migrate import Migrate, MigrateCommand
 import sys
 sys.path.append("..")
 from web import app
-from models.user_model import db, User
+from models.user_model import db
+
+from models.user_model import User
+from models.book_model import Book, Author, Year
 
 manager = Manager(app)
 

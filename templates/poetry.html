@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}诗歌{% endblock %}
+
+{% block link %}
+{% endblock %}
+
+{% block sidebar %}
+<ul class="nav" id="side-menu">
+    <li class="active">
+        <a href="#">现代诗</a>
+    </li>
+    <li>
+        <a href="#">宋词</a>
+    </li>
+    <li>
+        <a href="#">唐诗</a>
+    </li>
+    <li>
+        <a href="#">古诗</a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block content %}
+    测试 - 诗歌
+{% endblock %}
+
+{% block jsscript %}
+    <script type="text/javascript">
+        var poetryNav = document.getElementsByClassName("mainNavLiPoetry")[0];
+        poetryNav.className = poetryNav.className + " active";
+    </script>
+{% endblock %}

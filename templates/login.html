@@ -24,3 +24,10 @@
 	</form>
 </div>
 {% endblock %}
+
+{% block jsscript %}
+    <script type="text/javascript">
+        var content = document.getElementsByClassName("content")[0];
+        content.style.setProperty("width", "800px");
+    </script>
+{% endblock %}

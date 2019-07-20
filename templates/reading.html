@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}首页{% endblock %}
+
+{% block link %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='user-defined/css/reading.css') }}">
+{% endblock %}
+
+{% block sidebar %}
+<ul class="nav" id="side-menu">
+    <li>
+        <a href="#"><i class="fa fa-fw fa-book"></i> Reading</a>
+    </li>
+    <li>
+        <a href="#"><i class="fa fa-fw fa-folder"></i> 2019</a>
+    </li>
+    <li class="active">
+        <a href="#"><i class="fa fa-fw fa-file-o"></i> 2018</a>
+    </li>
+    <li>
+        <a href="#"><i class="fa fa-fw fa-cog"></i> 2017</a>
+    </li>
+    <!--<li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i> Dropdown
+            <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+            <li class="dropdown-header">Dropdown heading</li>
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li><a href="#">Separated link</a></li>
+            <li><a href="#">One more separated link</a></li>
+        </ul>
+    </li>-->
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="page-content">
+<ol>
+	<table>
+        {%- for book in books -%}
+            {% if loop.index0 % 4 == 0 %}
+            <tr>
+            {%- endif -%}
+            <td>
+                <li><p>
+                    <b>{{ book.title_desc }}</b>
+                    <br>作者：[{{ book.author.state }}] {{ book.author.name }}
+                </p></li>
+                <p>
+                    <img src="{{ book.imagePath }}" alt="图片加载失败" height="200" width="200"
+                         onerror="this.src='/static/images/book_imgs/imgFailed.jpeg'"/>
+                    <br>读书笔记：
+                    {%- if book.mdNotePath -%}
+                        <a href="{{ book.mdNotePath }}" target="_blank">{{ book.title }}</a>
+                    {%- else -%}
+                        <font color="#8A8A8A">{{ book.title }}</font>
+                    {%- endif -%}
+                    <br>推荐指数：&hearts;&hearts;&hearts;&hearts;&hearts; {{ book.rating }}
+                    <br>完成日期：{{ book.finish_date }}
+                    <br><i class="fa fa-thumbs-o-up" aria-hidden="true"> {{ book.likes }}</i> 赞
+                    {%- if book.one_sentence -%}
+                    <br>· {{ book.one_sentence }}
+                    {%- endif -%}
+                </p><br>
+            </td>
+            {% if loop.index0 % 4 == 3 or loop.index0 == books|length - 1 %}
+            </tr>
+            {% endif %}
+        {%- endfor -%}
+
+    </table>
+</ol>
+</div>
+{% endblock %}
+
+{% block jsscript %}
+    <script type="text/javascript">
+        var readingNav = document.getElementsByClassName("mainNavLiReading")[0];
+        readingNav.className = readingNav.className + " active";
+    </script>
+{% endblock %}

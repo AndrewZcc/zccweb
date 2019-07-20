@@ -29,18 +29,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">zhchuch·Best!</a>
+                <a class="navbar-brand" href="#">Objective Management · OKR</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('main.index') }}">首 页 <span class="sr-only">(current)</span></a>
+                <!--<ul class="nav navbar-nav">-->
+                <ul class="nav nav-tabs navbar-left">
+                    <li class="nav-item mainNavLi mainNavLiReading">
+                        <a class="nav-link" href="{{ url_for('main.index') }}">阅 读 <span class="sr-only">(current)</span></a>
                     </li>
-                    <!--<li class="nav-item">
-                        <a class="nav-link" href="#">发布问答</a>
-                    </li>-->
+                    <li class="nav-item mainNavLi mainNavLiPoetry">
+                        <a class="nav-link" href="{{ url_for('main.poetry') }}">诗 歌</a>
+                    </li>
                 </ul>
                 <!--<form class="navbar-form navbar-left">
                     <div class="form-group">
@@ -70,32 +71,7 @@
     </nav>
 
     <div class="nav-default sidebar" role="navigation">
-        <ul class="nav" id="side-menu">
-            <li class="active">
-                <a href="#"><i class="fa fa-fw fa-book"></i> Reading</a>
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-fw fa-folder"></i> 2019</a>
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-fw fa-file-o"></i> 2018</a>
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-fw fa-cog"></i> 2017</a>
-            </li>
-            <!--<li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i> Dropdown
-                    <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                    <li class="dropdown-header">Dropdown heading</li>
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                </ul>
-            </li>-->
-        </ul>
+        {% block sidebar %}{% endblock %}
     </div>
 
     <div id="page-wrapper">
