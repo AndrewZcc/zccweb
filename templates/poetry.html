@@ -55,13 +55,18 @@
                             </td>
                             <td>{{ poetry.create_time }}</td>
                             <td>
+                                {% if poetries_list|length > 1 %}
+                                    {% set catid_local = -1 %}
+                                {% else %}
+                                    {% set catid_local = cat.id %}
+                                {% endif %}
                                 <div style="float: left">
-                                    <form action="#" method="POST">
+                                    <form action="{{ url_for('main.del_poetry', cat_id=catid_local, poetry_id=poetry.id) }}" method="POST">
                                         <button type="submit" class="btn-danger">删除</button>
                                     </form>
                                 </div>
                                 <div style="float: left; margin-left: 10px;">
-                                    <form action="#" method="POST">
+                                    <form action="{{ url_for('main.edit_doc', cat_id=catid_local, poetry_id=poetry.id) }}" method="GET">
                                         <button type="submit" class="btn-success">编辑</button>
                                     </form>
                                 </div>

@@ -6,6 +6,10 @@ from models.user_model import db, User
 from models.book_model import Book, Author, Year
 from models.poetry_model import Poetry, Poeter, PoetryCategory
 from sqlalchemy import and_
+from utils.file_operation import *
+from configs.fileserver_config import *
+from pypinyin import lazy_pinyin
+import os
 
 main = Blueprint('main', __name__)
 
@@ -198,7 +202,8 @@ def poetry_detail(poetry_id):
     poetry_local = Poetry.query.filter(Poetry.id == int(poetry_id)).first()
     title = poetry_local.title
     if poetry_local.content_path:
-        md_data = '## 有内容 path = %s' % poetry_local.content_path
+        path = str(poetry_local.content_path)
+        md_data = sec_readfile(path)
     else:
         md_data = '## 该文档不存在！'
 
@@ -207,3 +212,52 @@ def poetry_detail(poetry_id):
         'md_data': md_data
     }
     return render_template('poetry/detail.html', **dicts)
+
+
+@main.route('/del_poetry/<cat_id>/<poetry_id>', methods=['POST'])
+def del_poetry(cat_id, poetry_id):
+    poetry_local = Poetry.query.filter(Poetry.id == int(poetry_id)).first()
+    db.session.delete(poetry_local)
+    db.session.commit()
+    if int(cat_id) == -1:
+        return redirect(url_for('main.poetry'))
+    else:
+        return redirect(url_for('main.poetry_cat', poet_catid=int(cat_id)))
+
+
+@main.route('/edit_poetry/<cat_id>/<poetry_id>', methods=['GET', 'POST'])
+def edit_doc(cat_id, poetry_id):
+    poetry_local = Poetry.query.filter(Poetry.id == int(poetry_id)).first()
+    doc_title = poetry_local.title
+    doc_id = poetry_local.id
+
+    if request.method == 'GET':
+        doc_content = ""
+        if poetry_local.content_path:
+            path = str(poetry_local.content_path)
+            doc_content = sec_readfile(path)
+
+        dicts = {
+            'catid': cat_id,
+            'docid': doc_id,
+            'doctitle': doc_title,
+            'doccontent': doc_content
+        }
+        return render_template('poetry/edit_poetry.html', **dicts)
+    else:
+        if request.form.get("updateContent"):
+            # 保存编辑内容
+            update_content = request.form.get("updateContent")
+            path = FILESERVER + '/poetry/'
+            full_filename = path + ''.join(lazy_pinyin(doc_title)) + '.md'
+            if not os.path.exists(path):
+                os.mkdir(path)
+            sec_writefile(full_filename, update_content)
+            # 更新数据库表
+            poetry_local.content_path = full_filename
+            db.session.commit()
+
+        if int(cat_id) == -1:
+            return redirect(url_for('main.poetry'))
+        else:
+            return redirect(url_for('main.poetry_cat', poet_catid=int(cat_id)))

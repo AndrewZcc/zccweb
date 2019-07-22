@@ -13,6 +13,9 @@
     $ source ~/.bash_profile
     ```
 
+1. **TODO**: 遗留问题：怎么用 lazypinyin 获取安全字符串？
+
+
 1. python-flask项目 **端口设置无效**
     
     https://www.cnblogs.com/xiaodai0/p/10460751.html
