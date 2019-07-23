@@ -24,8 +24,8 @@
 {% block content %}
     <div class="page-content">
         {% for cat in cat_list %}
-            {% set poetries = poetries_list[loop.index0] %}
-            {% if poetries %}
+            {%- set poetCatNum = loop.index0 -%}
+            {%- set poetries = poetries_list[poetCatNum] -%}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">{{ cat.name }}</h3>
@@ -43,10 +43,42 @@
                         </thead>
                         <tbody>
                         {%- for poetry in poetries -%}
+                            {%- if poetries_list|length > 1 -%}
+                                {%- set catid_local = -1 -%}
+                            {%- else -%}
+                                {%- set catid_local = cat.id -%}
+                            {%- endif -%}
+
+                            {% set poetInNum = loop.index %}
                         <tr>
-                            <td>{{ loop.index }}</td>
+                            <td>{{ poetInNum }}</td>
                             <td>
                                 <a href="{{ url_for('main.poetry_detail', poetry_id=poetry.id) }}" target="_blank">{{ poetry.title }}</a>
+                                <!-- 按钮触发模态框 -->
+                                <button class="btn-default" data-toggle="modal" data-target="#myModal{{ poetCatNum }}{{ poetInNum }}">重命名</button>
+                                <!-- 模态框（Modal） -->
+                                <div class="modal fade" id="myModal{{ poetCatNum }}{{ poetInNum }}" tabindex="-1"
+                                     role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="myModalLabel">重命名标题</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{ url_for('main.edit_doc', cat_id=catid_local, poetry_id=poetry.id) }}" method="POST">
+                                                    <div class="form-group">
+                                                        <input type="text" id="newTitle" class="form-control" name="newTitle" value="{{ poetry.title }}">
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                        <button type="submit" class="btn btn-primary">提交更改</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
                             </td>
                             <td>{{ poetry.poet.name }}
                                 {% if poetry.poet.state %}
@@ -55,11 +87,6 @@
                             </td>
                             <td>{{ poetry.create_time }}</td>
                             <td>
-                                {% if poetries_list|length > 1 %}
-                                    {% set catid_local = -1 %}
-                                {% else %}
-                                    {% set catid_local = cat.id %}
-                                {% endif %}
                                 <div style="float: left">
                                     <form action="{{ url_for('main.del_poetry', cat_id=catid_local, poetry_id=poetry.id) }}" method="POST">
                                         <button type="submit" class="btn-danger">删除</button>
@@ -73,12 +100,24 @@
                             </td>
                         </tr>
                         {%- endfor -%}
+                        <tr>
+                            <td></td>
+                            <td>
+                            <div>
+                                <form action="{{ url_for('main.create_poetry', cat_id=cat.id) }}" method="GET">
+                                    <button type="submit" class="btn-success">新增</button>
+                                </form>
+                            </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            {% endif %}
-        {% endfor %}
+        {%- endfor -%}
     </div>
 {% endblock %}
 

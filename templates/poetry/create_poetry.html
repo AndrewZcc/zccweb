@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}新增文档{% endblock %}
+
+{% block link %}{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h3 style="text-align: center;">新增文档</h3>
+    <form action="{{ url_for('main.create_poetry', cat_id= catid) }}" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">标题</label>
+            <input name="docTitle" type="text" id="title" class="form-control" style="width: 600px" placeholder="请输入文档标题">
+        </div>
+        <label for="author">作者</label>
+        <div class="form-group">
+            <input name="docAuthor" type="text" id="author" class="form-control" style="width: 200px; float: left" placeholder="诗人">
+            <input name="docAuthorState" type="text" id="author" class="form-control" style="width: 100px; margin-left: 205px" placeholder="国籍/年代">
+        </div>
+		<label for="mkinput">请编辑文档内容 (markdown 格式)</label>
+		<div class="form-group" id="my-editor-md">
+		    <textarea name="docContent" id="mkinput" rows="30" class="form-control" placeholder="文档内容"></textarea>
+		</div>
+		<div class="form-group" style="float: left;">
+		    <button type="submit" class="btn btn-success">确定</button>
+		</div>
+	</form>
+	<form action="{{ url_for('main.create_poetry', cat_id= catid) }}" method="POST" style="float: left; padding-left: 10px">
+		<div class="form-group">
+		    <button type="submit" class="btn btn-primary">取消</button>
+		</div>
+	</form>
+</div>
+{% endblock %}

@@ -8,6 +8,7 @@ from models.poetry_model import Poetry, Poeter, PoetryCategory
 from sqlalchemy import and_
 from utils.file_operation import *
 from configs.fileserver_config import *
+from werkzeug.utils import secure_filename
 from pypinyin import lazy_pinyin
 import os
 
@@ -214,7 +215,7 @@ def poetry_detail(poetry_id):
     return render_template('poetry/detail.html', **dicts)
 
 
-@main.route('/del_poetry/<cat_id>/<poetry_id>', methods=['POST'])
+@main.route('/del_poetry/<cat_id>/<poetry_id>/', methods=['POST'])
 def del_poetry(cat_id, poetry_id):
     poetry_local = Poetry.query.filter(Poetry.id == int(poetry_id)).first()
     db.session.delete(poetry_local)
@@ -225,11 +226,12 @@ def del_poetry(cat_id, poetry_id):
         return redirect(url_for('main.poetry_cat', poet_catid=int(cat_id)))
 
 
-@main.route('/edit_poetry/<cat_id>/<poetry_id>', methods=['GET', 'POST'])
+@main.route('/edit_poetry/<cat_id>/<poetry_id>/', methods=['GET', 'POST'])
 def edit_doc(cat_id, poetry_id):
     poetry_local = Poetry.query.filter(Poetry.id == int(poetry_id)).first()
     doc_title = poetry_local.title
     doc_id = poetry_local.id
+    modify_flag = False
 
     if request.method == 'GET':
         doc_content = ""
@@ -245,16 +247,65 @@ def edit_doc(cat_id, poetry_id):
         }
         return render_template('poetry/edit_poetry.html', **dicts)
     else:
+        if request.form.get("newTitle"):
+            new_title = request.form.get("newTitle")
+            poetry_local.title = new_title
+            modify_flag = True
+        
         if request.form.get("updateContent"):
             # 保存编辑内容
             update_content = request.form.get("updateContent")
+            if not poetry_local.content_path:
+                path = FILESERVER + '/poetry/'
+                full_filename = path + secure_filename(''.join(lazy_pinyin(doc_title))) + '.md'
+                poetry_local.content_path = full_filename
+
+            dir_path = os.path.dirname(poetry_local.content_path)
+            if not os.path.exists(dir_path):
+                os.mkdir(dir_path)
+            sec_writefile(poetry_local.content_path, update_content)
+
+            modify_flag = True
+
+        # 更新数据库表
+        if modify_flag:
+            db.session.commit()
+
+        if int(cat_id) == -1:
+            return redirect(url_for('main.poetry'))
+        else:
+            return redirect(url_for('main.poetry_cat', poet_catid=int(cat_id)))
+
+
+@main.route('/poetry/create/<cat_id>/', methods=['GET', 'POST'])
+def create_poetry(cat_id):
+    if request.method == 'GET':
+        return render_template('poetry/create_poetry.html', catid=cat_id)
+    else:
+        title = request.form.get('docTitle')
+        if title:
+            content = request.form.get('docContent')
+            poet_name = request.form.get('docAuthor')
+            poet_state = request.form.get('docAuthorState')
+
+            new_poetry = Poetry(title=title)
+            # 指定诗人
+            poet = Poeter.query.filter(and_(Poeter.name == poet_name, Poeter.state == poet_state)).first()
+            if not poet:
+                poet = Poeter(name=poet_name, state=poet_state)
+            new_poetry.poet = poet
+            # 设定类别
+            poet_cat = PoetryCategory.query.filter(PoetryCategory.id == int(cat_id)).first()
+            new_poetry.categories.append(poet_cat)
+            # 记录内容
             path = FILESERVER + '/poetry/'
-            full_filename = path + ''.join(lazy_pinyin(doc_title)) + '.md'
+            full_filename = path + secure_filename(''.join(lazy_pinyin(title))) + '.md'
             if not os.path.exists(path):
                 os.mkdir(path)
-            sec_writefile(full_filename, update_content)
-            # 更新数据库表
-            poetry_local.content_path = full_filename
+            sec_writefile(full_filename, content)
+            new_poetry.content_path = full_filename
+            # 更新数据库
+            db.session.add(new_poetry)
             db.session.commit()
 
         if int(cat_id) == -1:

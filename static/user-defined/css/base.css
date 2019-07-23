@@ -50,10 +50,15 @@ body {
 
 .form-container{
 	margin-top: 10px;
+	margin-left: 20px;
 	margin-bottom: 20px;
 }
 
 .form-content {
 	width: 360px;
 	margin: 0 auto;
+}
+
+#doc-content {
+	margin-left: 12px;
 }
