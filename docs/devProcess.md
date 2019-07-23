@@ -13,8 +13,15 @@
     $ source ~/.bash_profile
     ```
 
-1. **TODO**: 遗留问题：怎么用 lazypinyin 获取安全字符串？
+1. **Fixed**: 遗留问题：怎么用 lazypinyin 获取安全字符串？
 
+    ```python
+    from werkzeug.utils import secure_filename
+    from pypinyin import lazy_pinyin
+    
+    todostr = request.form.get('todostr')
+    sec_str = secure_filename("".join(lazy_pinyin(todostr)))
+    ```
 
 1. python-flask项目 **端口设置无效**
     
@@ -35,6 +42,10 @@
     ✖️height: calc(100% - 10px);
     ✔️height: calc(100vh - 48px);
     ```
+    
+    参考网站：sb-admin-2
+    <br>sb-admin-2(-min).js
+    <br>sb-admin-2(-min).css
 
 1. 注意：一定要好好学会利用 div 以及 float:left 左悬浮标签！
 
