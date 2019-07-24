@@ -33,6 +33,11 @@
     - 使用 `app.run(host='0.0.0.0', port='8090')` 不会报错，但 浏览器访问时 会报 `405 Not Allowed` 错误；
     - 建议 首次运行新项目用 `app.run(host='127.0.0.1', port='8090')` 先尝试运行，如果该端口已被占用，使用该命令会提供报错信息！
 
+1. 按钮添加弹出框（确认弹框）
+
+    ```html5
+    <input type="submit" class="btn btn-danger" value="删除" onclick="return confirm('确认删除文档吗？（该操作不可撤回）')">
+    ```
 
 1. 如何让sidebar左侧边栏导航在垂直方向全尺寸拉伸？
 
