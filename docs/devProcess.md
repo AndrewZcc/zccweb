@@ -38,6 +38,17 @@
     ```html5
     <input type="submit" class="btn btn-danger" value="删除" onclick="return confirm('确认删除文档吗？（该操作不可撤回）')">
     ```
+    
+1. Error: sqlalchemy.exc.IntegrityError (sqlalchemy query filter raised as a result of Query-invoked autoflush)
+
+    * 在使用 sqlalchemy.filter.query 时，由于 SqlAlchemy 默认开启了 auto-flush(预创建) 功能，所以对于 nullable=Flase (非空字段) 查询就遇到如上报错
+    * 解决方法：（创建db时，关闭autoflush功能）
+
+        ```python
+        from flask_sqlalchemy import SQLAlchemy
+        
+        db = SQLAlchemy(session_options={"autoflush": False})
+        ```
 
 1. 如何让sidebar左侧边栏导航在垂直方向全尺寸拉伸？
 
