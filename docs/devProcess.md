@@ -59,9 +59,43 @@
     ✔️height: calc(100vh - 48px);
     ```
     
-    参考网站：sb-admin-2
-    <br>sb-admin-2(-min).js
-    <br>sb-admin-2(-min).css
+    侧边栏 Corp-Web Usage:
+    
+    ```html
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='custom/sb-admin-2.css') }}" rel="stylesheet">
+
+    <div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+    <ul class="nav" id="side-menu">
+    <li class="sidebar-search">
+    <div class="input-group custom-search-form">
+    <input type="text" class="form-control" placeholder="搜一下" disabled="true">
+    <span class="input-group-btn">
+    <button class="btn btn-default" type="button" disabled="true">
+    <i class="fa fa-search"></i>
+    </button>
+    </span>
+    </div>
+    <!-- /input-group -->
+    </li>
+    <li>left sidebar items.</li>
+    <li class="baseLeftNavLi">
+    <a href="/feedback"><i class="fa fa-edit fa-fw"></i> 反馈</a>
+    </li>
+    </ul>
+    </div>
+    </div>
+    ```
+
+    • **参考的模板 网站（SB Admin v2.0）**
+    <br>http://www.suchso.com/code/sbadminiframe/sbadmin/pages/index.html
+    <br>(全站模板)
+
+    Custom/sb-admin-2.js
+    <br>Custom/sb-admin-2.min.css
+    <br>https://www.bootcdn.cn/startbootstrap-sb-admin-2/
+    <br>(这里面定义了 sidebar 相关的css样式)
 
 1. 注意：一定要好好学会利用 div 以及 float:left 左悬浮标签！
 
@@ -71,3 +105,10 @@
 
 1. [Jinja2 for flask](http://jinja.pocoo.org/docs/2.10/templates/#synopsis)
 2. [Bootstrap4 中文文档](http://bs4.ntp.org.cn/)
+
+---
+
+## 其他链接
+
+1. [如何掌握所有的程序语言](http://www.yinwang.org/blog-cn/2017/07/06/master-pl)
+
