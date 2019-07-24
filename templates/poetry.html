@@ -89,7 +89,7 @@
                             <td>
                                 <div style="float: left">
                                     <form action="{{ url_for('main.del_poetry', cat_id=catid_local, poetry_id=poetry.id) }}" method="POST">
-                                        <button type="submit" class="btn-danger">删除</button>
+                                        <button type="submit" class="btn-danger" onclick="return confirm('确认删除文档吗？（该操作不可撤回）')">删除</button>
                                     </form>
                                 </div>
                                 <div style="float: left; margin-left: 10px;">
@@ -105,7 +105,7 @@
                             <td>
                             <div>
                                 <form action="{{ url_for('main.create_poetry', cat_id=cat.id) }}" method="GET">
-                                    <button type="submit" class="btn-success">新增</button>
+                                    <button type="submit" class="btn btn-success">新增</button>
                                 </form>
                             </div>
                             </td>

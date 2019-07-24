@@ -3,10 +3,10 @@
 
 
 def sec_readfile(path):
-    with open(path, 'r') as f:
+    with open(path, 'r', encoding='utf-8') as f:
         return f.read()
 
 
 def sec_writefile(path, content):
-    with open(path, 'w') as f:
+    with open(path, 'w', newline='', encoding='utf-8') as f:
         f.write(content)

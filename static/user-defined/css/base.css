@@ -62,3 +62,8 @@ body {
 #doc-content {
 	margin-left: 12px;
 }
+
+.form-group.required .star-label:after {
+	content:" *";
+	color:red;
+}

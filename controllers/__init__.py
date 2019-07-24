@@ -2,6 +2,8 @@
 # -*- encoding: utf-8 -*-
 
 from controllers.main import *
+from controllers.book_control import *
+from controllers.poetry_control import *
 
 DEFAULT_BLUEPRINT = [
     [main, '']

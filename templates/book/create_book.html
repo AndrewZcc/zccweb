@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}书籍上架{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h3 style="text-align: center;">书籍上架</h3>
+    <form action="{{ url_for('main.create_poetry', cat_id= catid) }}" method="POST" enctype="multipart/form-data">
+        <div class="form-group required">
+            <label for="title" class="star-label">标题</label>
+            <div>
+                <input name="bookTitleDesc" type="text" id="title" class="form-control" style="float: left; width: 400px;" placeholder="请输入标题">
+                <input name="bookTitle" type="text" id="title" class="form-control" style="width: 400px; margin-left: 410px;" placeholder="请输入书名">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="title">图片名</label>
+            <input name="bookImgName" type="text" id="title" class="form-control" style="width: 200px;" placeholder="图片名">
+        </div>
+
+    </form>
+</div>
+{% endblock %}

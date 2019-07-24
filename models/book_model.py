@@ -30,6 +30,7 @@ class Book(db.Model):
     one_sentence = db.Column(db.Text)
     eBookPath = db.Column(db.Text)
     likes = db.Column(db.Integer, nullable=False, default=1)
+    display = db.Column(db.Integer, nullable=False, default=1)
     author_id = db.Column(db.Integer, db.ForeignKey('book_author.id'))
     year_id = db.Column(db.Integer, db.ForeignKey('book_year.year'))
 
