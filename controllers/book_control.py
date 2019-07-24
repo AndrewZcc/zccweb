@@ -64,3 +64,11 @@ def create_book(year_id):
     else:
         pass
 
+
+@main.route('/edit_book/<year_id>/<book_id>', methods=['GET', 'POST'])
+def edit_book(year_id, book_id):
+    book_local = Book.query.filter(Book.id == int(book_id)).first()
+    if request.method == 'GET':
+        return render_template('book/edit_book.html', book=book_local)
+    else:
+        pass

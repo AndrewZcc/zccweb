@@ -66,8 +66,7 @@
                     {%- endif -%}
                     <div>
                         <div style="float: left;">
-{#                            <!--<form action="{{ url_for('main.edit_doc', cat_id=catid_local, poetry_id=poetry.id) }}" method="GET">-->#}
-                            <form action="" method="GET">
+                            <form action="{{ url_for('main.edit_book', year_id=book.year_id, book_id=book.id) }}" method="GET">
                                 <button type="submit" class="btn-success">编辑</button>
                             </form>
                         </div>
