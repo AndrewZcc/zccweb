@@ -2,7 +2,23 @@
 
 {% block title %}书籍上架{% endblock %}
 
+{% block sidebar %}
+    {% for year in year_all %}
+        <li class="navBookYear{{ year.year }}">
+            <a href="{{ url_for('main.reading_cat', year=year.year) }}"><i class="fa fa-fw fa-book"></i>
+        {%- if year.year == 9999 -%}
+            Reading
+        {%- else -%}
+            {{ year.year }}
+        {%- endif -%}
+        </a></li>
+    {% endfor %}
+{% endblock %}
+
 {% block content %}
+    <script>
+        var activeYear = "{{ activeYear.year }}";
+    </script>
 <div class="form-container">
     <h3 style="text-align: center;">书籍上架</h3>
     <form action="" method="POST" enctype="multipart/form-data">
@@ -40,4 +56,8 @@
 		</div>
 	</form>
 </div>
+{% endblock %}
+
+{% block jsscript %}
+    <script src="{{ url_for('static', filename='user-defined/js/reading.js') }}" type="text/javascript"></script>
 {% endblock %}
