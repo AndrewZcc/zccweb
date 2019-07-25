@@ -115,9 +115,9 @@ def del_poetry(cat_id, poetry_id):
 
 @main.route('/edit_poetry/<cat_id>/<poetry_id>/', methods=['GET', 'POST'])
 def edit_doc(cat_id, poetry_id):
+    cat_all = PoetryCategory.query.filter().all()
     poetry_local = Poetry.query.filter(Poetry.id == int(poetry_id)).first()
-    doc_title = poetry_local.title
-    doc_id = poetry_local.id
+    poet_cat = poetry_local.categories[0]
     modify_flag = False
 
     if request.method == 'GET':
@@ -127,9 +127,10 @@ def edit_doc(cat_id, poetry_id):
             doc_content = sec_readfile(path)
 
         dicts = {
+            'cat_all': cat_all,
+            'poet_cat': poet_cat,
             'catid': cat_id,
-            'docid': doc_id,
-            'doctitle': doc_title,
+            'docPoetry': poetry_local,
             'doccontent': doc_content
         }
         return render_template('poetry/edit_poetry.html', **dicts)
@@ -175,7 +176,15 @@ def edit_doc(cat_id, poetry_id):
 @main.route('/poetry/create/<cat_id>/', methods=['GET', 'POST'])
 def create_poetry(cat_id):
     if request.method == 'GET':
-        return render_template('poetry/create_poetry.html', catid=cat_id)
+        cat_all = PoetryCategory.query.filter().all()
+        poet_cat = PoetryCategory.query.filter(PoetryCategory.id == int(cat_id)).first()
+
+        dicts = {
+            'cat_all': cat_all,
+            'poet_cat': poet_cat,
+            'catid': cat_id
+        }
+        return render_template('poetry/create_poetry.html', **dicts)
     else:
         title = request.form.get('docTitle')
         if title:

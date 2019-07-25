@@ -1,17 +1,24 @@
 {% extends 'base.html' %}
 
-{% block title %}编辑文档{% endblock %}
+{% block title %}编辑诗歌{% endblock %}
 
-{% block link %}{% endblock %}
+{% block sidebar %}
+    {% for navCat in cat_all %}
+        <li class="navPoetCat{{ navCat.id }}">
+            <a href="{{ url_for('main.poetry_cat', poet_catid=navCat.id) }}">{{ navCat.name }}</a>
+        </li>
+    {% endfor %}
+{% endblock %}
 
 {% block content %}
+    <script>var activeCat = "{{ poet_cat.id }}";</script>
 <div class="form-container">
-    <h3 style="text-align: center;">编辑文档</h3>
+    <h3 style="text-align: center;">编辑诗歌</h3>
     <div class="form-group">
-        <label for="title">标题</label>
-        <p class="title">{{ doctitle }}</p>
+        <label for="title">诗词名</label>
+        <p class="title">{{ docPoetry.title }}</p>
     </div>
-	<form action="{{ url_for('main.edit_doc', cat_id= catid, poetry_id= docid) }}" method="POST" enctype="multipart/form-data">
+	<form action="{{ url_for('main.edit_doc', cat_id= catid, poetry_id= docPoetry.id) }}" method="POST" enctype="multipart/form-data">
 		<label for="mkinput">请编辑文档内容 (markdown 格式)</label>
 		<div class="form-group" id="my-editor-md">
 		<textarea name="updateContent" id="mkinput" rows="30" class="form-control" placeholder="文档内容">{{ doccontent }}</textarea>
@@ -20,10 +27,15 @@
 		<button type="submit" class="btn btn-success">确认修改</button>
 		</div>
 	</form>
-	<form action="{{ url_for('main.edit_doc', cat_id= catid, poetry_id= docid) }}" method="POST" style="float: left; padding-left: 10px">
+	<form action="{{ url_for('main.edit_doc', cat_id= catid, poetry_id= docPoetry.id) }}" method="POST" style="float: left; padding-left: 10px">
 		<div class="form-group">
 		<button type="submit" class="btn btn-primary">放弃修改</button>
 		</div>
 	</form>
 </div>
 {% endblock %}
+
+{% block jsscript %}
+    <script src="{{ url_for('static', filename='user-defined/js/poetry.js') }}" type="text/javascript"></script>
+{% endblock %}
+

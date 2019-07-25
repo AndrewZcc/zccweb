@@ -1,20 +1,28 @@
 {% extends 'base.html' %}
 
-{% block title %}新增文档{% endblock %}
+{% block title %}新增诗歌{% endblock %}
 
-{% block link %}{% endblock %}
+{% block sidebar %}
+    {% for navCat in cat_all %}
+        <li class="navPoetCat{{ navCat.id }}">
+            <a href="{{ url_for('main.poetry_cat', poet_catid=navCat.id) }}">{{ navCat.name }}</a>
+        </li>
+    {% endfor %}
+{% endblock %}
 
 {% block content %}
+    <script>var activeCat = "{{ poet_cat.id }}";</script>
 <div class="form-container">
-    <h3 style="text-align: center;">新增文档</h3>
+    <h3 style="text-align: center;">创建诗词</h3>
     <form action="{{ url_for('main.create_poetry', cat_id= catid) }}" method="POST" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="title">标题</label>
+        <div class="form-group required">
+            <label for="title" class="star-label">标题</label>
             <input name="docTitle" type="text" id="title" class="form-control" style="width: 600px" placeholder="请输入文档标题">
         </div>
-        <label for="author">作者</label>
+
+        <label for="author" class="star-label">作者</label>
         <div class="form-group">
-            <input name="docAuthor" type="text" id="author" class="form-control" style="width: 200px; float: left" placeholder="诗人">
+            <input name="docAuthor" type="text" id="author" class="form-control" style="width: 200px; float: left; " placeholder="诗人">
             <input name="docAuthorState" type="text" id="author" class="form-control" style="width: 100px; margin-left: 205px" placeholder="国籍/年代">
         </div>
 		<label for="mkinput">请编辑文档内容 (markdown 格式)</label>
@@ -31,4 +39,8 @@
 		</div>
 	</form>
 </div>
+{% endblock %}
+
+{% block jsscript %}
+    <script src="{{ url_for('static', filename='user-defined/js/poetry.js') }}" type="text/javascript"></script>
 {% endblock %}
