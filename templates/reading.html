@@ -103,8 +103,5 @@
 {% endblock %}
 
 {% block jsscript %}
-    <script type="text/javascript">
-        var readingNav = document.getElementsByClassName("mainNavLiReading")[0];
-        readingNav.className = readingNav.className + " active";
-    </script>
+    <script src="{{ url_for('static', filename='user-defined/js/reading.js') }}" type="text/javascript"></script>
 {% endblock %}

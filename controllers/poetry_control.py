@@ -47,12 +47,14 @@ def poetry():
     # init_poetry_db()
 
     cat_list = PoetryCategory.query.filter().all()
+    cat_all = cat_list
     poetries_list = []
     for cat in cat_list:
         poetries = cat.poetries
         poetries_list.append(poetries)
 
     dicts = {
+        'cat_all': cat_all,
         'cat_list': cat_list,
         'poetries_list': poetries_list
     }
@@ -61,6 +63,7 @@ def poetry():
 
 @main.route('/poetry/category/<poet_catid>/')
 def poetry_cat(poet_catid):
+    cat_all = PoetryCategory.query.filter().all()
     cat = PoetryCategory.query.filter(PoetryCategory.id == int(poet_catid)).first()
     poetries = cat.poetries
 
@@ -70,6 +73,7 @@ def poetry_cat(poet_catid):
     poetries_list.append(poetries)
 
     dicts = {
+        'cat_all': cat_all,
         'cat_list': cat_list,
         'poetries_list': poetries_list
     }
@@ -78,6 +82,7 @@ def poetry_cat(poet_catid):
 
 @main.route('/poetry/<poetry_id>/')
 def poetry_detail(poetry_id):
+    cat_all = PoetryCategory.query.filter().all()
     poetry_local = Poetry.query.filter(Poetry.id == int(poetry_id)).first()
     title = poetry_local.title
     if poetry_local.content_path:
@@ -86,7 +91,11 @@ def poetry_detail(poetry_id):
     else:
         md_data = '## 该文档不存在！'
 
+    poet_cat = poetry_local.categories[0]
+
     dicts = {
+        'cat_all': cat_all,
+        'poet_cat': poet_cat,
         'title': title,
         'md_data': md_data
     }

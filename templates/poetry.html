@@ -7,23 +7,23 @@
 {% endblock %}
 
 {% block sidebar %}
-    <li class="active">
-        <a href="#">现代诗</a>
-    </li>
-    <li>
-        <a href="#">宋词</a>
-    </li>
-    <li>
-        <a href="#">唐诗</a>
-    </li>
-    <li>
-        <a href="#">古诗</a>
-    </li>
+    {% for navCat in cat_all %}
+        <li class="navPoetCat{{ navCat.id }}">
+            <a href="{{ url_for('main.poetry_cat', poet_catid=navCat.id) }}">{{ navCat.name }}</a>
+        </li>
+    {% endfor %}
 {% endblock %}
 
 {% block content %}
     <div class="page-content">
         {% for cat in cat_list %}
+            <!-- 灵活设置 active 类别，传递 jinja数据至javascript -->
+            {%- if cat_list|length > 1 -%}
+                <script>var activeCat = -1;</script>
+            {%- else -%}
+                <script>var activeCat = "{{ cat.id }}";</script>
+            {%- endif -%}
+
             {%- set poetCatNum = loop.index0 -%}
             {%- set poetries = poetries_list[poetCatNum] -%}
             <div class="panel panel-default">
@@ -53,7 +53,7 @@
                         <tr>
                             <td>{{ poetInNum }}</td>
                             <td>
-                                <a href="{{ url_for('main.poetry_detail', poetry_id=poetry.id) }}" target="_blank">{{ poetry.title }}</a>
+                                <a href="{{ url_for('main.poetry_detail', poetry_id=poetry.id) }}">{{ poetry.title }}</a>
                                 <!-- 按钮触发模态框 -->
                                 <button class="btn-default" data-toggle="modal" data-target="#myModal{{ poetCatNum }}{{ poetInNum }}">重命名</button>
                                 <!-- 模态框（Modal） -->
