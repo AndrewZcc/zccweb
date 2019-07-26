@@ -43,7 +43,7 @@
                          onerror="this.src='/static/images/imgFailed.jpeg'"/>
                     <br>读书笔记：
                     {%- if book.mdNotePath -%}
-                        <a href="{{ book.mdNotePath }}" target="_blank">{{ book.title }}</a>
+                        <a href="{{ url_for('main.book_detail', year_id=activeYear.year, book_id=book.id) }}" target="_blank">{{ book.title }}</a>
                     {%- else -%}
                         <font color="#8A8A8A">{{ book.title }}</font>
                     {%- endif -%}
@@ -55,9 +55,8 @@
                         {{ book.finish_date }}
                     {%- endif -%}
                     <br><i class="fa fa-thumbs-o-up" aria-hidden="true"> {{ book.likes }}</i> 赞
-                    {%- if book.one_sentence -%}
-                    <br>· {{ book.one_sentence }}
-                    {%- endif -%}
+                    {%- if book.eBookPath -%}<a href="{{ book.eBookPath }}" target="_blank" style="margin-left: 5px;">eBook</a>{%- endif -%}
+                    {%- if book.one_sentence -%}<br>· {{ book.one_sentence }}{%- endif -%}
                     <div>
                         <div style="float: left;">
                             <form action="{{ url_for('main.edit_book', year_id=book.year_id, book_id=book.id) }}" method="GET">

@@ -99,7 +99,7 @@ def poetry_detail(poetry_id):
         'title': title,
         'md_data': md_data
     }
-    return render_template('poetry/detail.html', **dicts)
+    return render_template('poetry/poetry_detail.html', **dicts)
 
 
 @main.route('/del_poetry/<cat_id>/<poetry_id>/', methods=['POST'])
@@ -144,9 +144,9 @@ def edit_doc(cat_id, poetry_id):
             # 保存编辑内容
             update_content = request.form.get("updateContent")
             poet_cat = poetry_local.categories[0]
-            path = FILESERVER + '/poetry/' + str(poet_cat.id) + secure_filename(
-                ''.join(lazy_pinyin(poet_cat.name))) + "/"
-            full_filename = path + secure_filename(''.join(lazy_pinyin(doc_title))) + '.md'
+            path = FILESERVER + '/poetry/'
+            path = path + str(poet_cat.id) + secure_filename(''.join(lazy_pinyin(poet_cat.name))) + "/"
+            full_filename = path + secure_filename(''.join(lazy_pinyin(poetry_local.title))) + '.md'
 
             if not os.path.exists(full_filename):
                 if poetry_local.content_path:
@@ -157,7 +157,7 @@ def edit_doc(cat_id, poetry_id):
 
             dir_path = os.path.dirname(full_filename)
             if not os.path.exists(dir_path):
-                os.mkdir(dir_path)
+                os.makedirs(dir_path)
 
             poetry_local.content_path = full_filename
             sec_writefile(full_filename, update_content)
@@ -205,7 +205,7 @@ def create_poetry(cat_id):
             path = FILESERVER + '/poetry/' + cat_id + secure_filename(''.join(lazy_pinyin(poet_cat.name))) + "/"
             full_filename = path + secure_filename(''.join(lazy_pinyin(title))) + '.md'
             if not os.path.exists(path):
-                os.mkdir(path)
+                os.makedirs(path)
             sec_writefile(full_filename, content)
             new_poetry.content_path = full_filename
             # 更新数据库

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block sidebar %}
+    {% for year in year_all %}
+        <li class="navBookYear{{ year.year }}">
+            <a href="{{ url_for('main.reading_cat', year=year.year) }}"><i class="fa fa-fw fa-book"></i>
+        {%- if year.year == 9999 -%}
+            Reading
+        {%- else -%}
+            {{ year.year }}
+        {%- endif -%}
+        </a></li>
+    {% endfor %}
+{% endblock %}
+
+{% block content %}
+<div id="doc-content">
+    <script>
+        var activeYear = "{{ activeYear.year }}";
+    </script>
+
+    <textarea style="display:none;">{{ md_data }}</textarea>
+</div>
+{% endblock %}
+
+{% block jsscript %}
+    <script src="{{ url_for('static', filename='user-defined/js/reading.js') }}" type="text/javascript"></script>
+{% endblock %}
