@@ -1,3 +1,21 @@
+2019.7.27
+
+## 个人网站首页
+
+* 首页设计
+
+`base.html`
+```html
+方案一：(直接修改图标链接)
+<a class="navbar-brand" href="https://zhchuch.github.io/" target="_blank">Welcome to PNF platform!</a>
+<a class="navbar-brand" href="https://zhchuch.github.io/" target="_blank">Objective Management</a>
+
+方案二：(在首页额外添加导航入口)
+* 不要爬html数据过来了，个人主页就用Github静态页面就ok了！
+```
+
+2019.7.21
+
 ## 导航栏设计
 
 * base.html
