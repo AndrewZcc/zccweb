@@ -125,10 +125,9 @@ def create_book(year_id):
                 db.session.add(book_year)
             new_book.year = book_year
 
-            book_image = request.form.get('bookImgName')
+            book_image = request.form.get('bookImgLink')
             if book_image:
-                image_path = BOOKIMGSERVER + book_image
-                new_book.imagePath = image_path
+                new_book.imagePath = book_image
 
             oneSentence = request.form.get('bookOneSentence')
             if oneSentence:

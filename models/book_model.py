@@ -25,7 +25,7 @@ class Book(db.Model):
     title_desc = db.Column(db.String(100), nullable=False, default=title)
     imagePath = db.Column(db.Text)
     mdNotePath = db.Column(db.Text)
-    rating = db.Column(db.Integer, nullable=False, default=3)
+    rating = db.Column(db.Integer, nullable=False, default=5)
     finish_date = db.Column(db.Text, default=str(time.strftime("%Y-%m-%d")))
     one_sentence = db.Column(db.Text)
     eBookPath = db.Column(db.Text)

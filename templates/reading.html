@@ -54,7 +54,7 @@
                     {%- else -%}
                         {{ book.finish_date }}
                     {%- endif -%}
-                    <br><i class="fa fa-thumbs-o-up" aria-hidden="true"> {{ book.likes }}</i> 赞
+                    <br><i class="fa fa-thumbs-o-up" aria-hidden="true"> <font style="font-style: normal; color: #E94F06;">{{ book.likes }}</font> 赞</i>
                     {%- if book.eBookPath -%}<a href="{{ book.eBookPath }}" target="_blank" style="margin-left: 5px;">eBook</a>{%- endif -%}
                     {%- if book.one_sentence -%}<br>· {{ book.one_sentence }}{%- endif -%}
                     <div>
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </p>
-                <br><br>
+                <br><div style="margin-top: 20px;"> </div><br>
             </td>
             {%- endif -%}
             {%- if loop.index0 % 4 == 3 -%}
