@@ -30,14 +30,6 @@ body {
 	height: 100%;
 }
 
-#side-menu {
-	background-color: #f8f8f8;
-	width: 200px;
-	height: calc(100vh - 48px);
-	float: left;
-	font-size: 105%;
-}
-
 #page-wrapper {
 	margin: 0 auto;
 }
