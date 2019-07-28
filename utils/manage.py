@@ -9,9 +9,10 @@ sys.path.append("..")
 from web import app
 from models.user_model import db
 
-from models.user_model import User
-from models.book_model import Book, Author, Year
-from models.poetry_model import Poeter, Poetry, PoetryCategory
+# from models.user_model import User
+# from models.book_model import Book, Author, Year
+# from models.poetry_model import Poeter, Poetry, PoetryCategory
+from models.notes_model import Note, NoteCategory
 
 manager = Manager(app)
 

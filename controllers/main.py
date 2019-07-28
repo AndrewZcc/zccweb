@@ -10,9 +10,9 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-
-    return redirect(url_for('main.reading'))
-    #return redirect(url_for('main.poetry'))
+    # return redirect(url_for('main.reading'))
+    # return redirect(url_for('main.poetry'))
+    return redirect(url_for('main.notes_record'))
 
 
 @main.route('/login/', methods=['GET', 'POST'])

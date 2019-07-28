@@ -4,6 +4,7 @@
 from controllers.main import *
 from controllers.book_control import *
 from controllers.poetry_control import *
+from controllers.notes_control import *
 
 DEFAULT_BLUEPRINT = [
     [main, '']

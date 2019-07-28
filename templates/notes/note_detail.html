@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block sidebar %}
+    {% for navCat in cat_all %}
+        <li class="navNoteCat{{ navCat.id }}">
+            <a href="{{ url_for('main.notes_cat', note_catid=navCat.id) }}">{{ navCat.name }}</a>
+        </li>
+    {% endfor %}
+{% endblock %}
+
+{% block content %}
+<div id="doc-content">
+    <script>var activeCat = "{{ note_cat.id }}";</script>
+
+    <textarea style="display:none;">{{ md_data }}</textarea>
+</div>
+{% endblock %}
+
+{% block jsscript %}
+    <script src="{{ url_for('static', filename='user-defined/js/notes.js') }}" type="text/javascript"></script>
+{% endblock %}

@@ -47,9 +47,15 @@
                     <li class="nav-item mainNavLi mainNavLiPoetry">
                         <a class="nav-link" href="{{ url_for('main.poetry') }}">诗 歌</a>
                     </li>
+                    <li class="nav-item mainNavLi mainNavLiNotes">
+                        <a class="nav-link" href="{{ url_for('main.notes_record') }}">笔 记</a>
+                    </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item">
+                        <a href="https://zhchuch.github.io/" target="_blank">Homepage</a>
+                    </li>
                     {% if session.get('username') %}
                         <li class="nav-item">
                             <a href="#" class="nav-link">{{ session.get('username') }}</a>
