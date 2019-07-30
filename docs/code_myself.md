@@ -1,3 +1,33 @@
+2019.7.30
+
+## 基本工具
+
+```python
+# db定义时请注意：(关闭autoflush)
+from flask_sqlalchemy import SQLAlchemy
+db = SQLAlchemy(session_options={"autoflush": False})
+
+# 使用
+url_id = generate_random_str(12)
+while 1:
+doc = Document.query.filter(Document.url_id == url_id).first()
+if not doc:
+    break
+url_id = generate_random_str(12)
+#print("loc2: %s" % url_id)
+new_doc.url_id = str(url_id)
+
+# 生成随机数字和字母组合字符串
+def generate_random_str(randomlength=16):
+    """
+    string.digits=0123456789
+    string.ascii_letters=abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+    """
+    str_list = [random.choice(string.digits + string.ascii_letters) for i in range(randomlength)]
+    random_str = ''.join(str_list)
+    return random_str
+```
+
 2019.7.27
 
 ## 个人网站首页
