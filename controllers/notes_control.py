@@ -4,7 +4,7 @@
 from controllers.main import *
 from models.notes_model import Note, NoteCategory
 from configs.fileserver_config import *
-from utils.file_operation import *
+from utils import *
 
 from werkzeug.utils import secure_filename
 from pypinyin import lazy_pinyin
@@ -86,6 +86,12 @@ def note_detail(note_id):
 @main.route('/notes/delete/<cat_id>/<note_id>/', methods=['POST'])
 def del_note(cat_id, note_id):
     note_local = Note.query.filter(Note.id == int(note_id)).first()
+    if os.path.exists(note_local.content_path):
+        try:
+            os.remove(note_local.content_path)
+        except OSError:
+            pass
+
     db.session.delete(note_local)
     db.session.commit()
     if int(cat_id) == -1:

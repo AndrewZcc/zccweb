@@ -5,20 +5,22 @@ from models import db
 from datetime import datetime
 
 
-class NoteCategory(db.Model):
-    __tablename__ = 'note_category'
+class BlogCategory(db.Model):
+    __tablename__ = 'blog_category'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(30), nullable=False)
     order = db.Column(db.Integer, default=1)
 
 
-class Note(db.Model):
-    __tablename__ = 'note'
+class Blog(db.Model):
+    __tablename__ = 'blog'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(300), nullable=False)
     create_time = db.Column(db.DateTime, default=datetime.now)
+    url_id = db.Column(db.String(12), nullable=False)
     content_path = db.Column(db.Text)
+
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User', backref=db.backref('notes'))
-    cat_id = db.Column(db.Integer, db.ForeignKey('note_category.id'))
-    category = db.relationship('NoteCategory', backref=db.backref('notes'))
+    user = db.relationship('User', backref=db.backref('blogs', order_by='Blog.create_time'))
+    cat_id = db.Column(db.Integer, db.ForeignKey('blog_category.id'))
+    category = db.relationship('BlogCategory', backref=db.backref('blogs', order_by='Blog.create_time'))

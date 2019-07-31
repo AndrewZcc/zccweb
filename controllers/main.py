@@ -39,7 +39,7 @@ def login():
 
 @main.route('/logout/')
 def logout():
-    if session['username']:
+    if session.get('username'):
         session.pop('username')
     return redirect(url_for('main.index'))
 

@@ -1,10 +1,14 @@
 #!/usr/bin/python3
 # -*- encoding: utf-8 -*-
 
+import sys
+sys.path.append("..")
 from controllers.main import *
 from controllers.book_control import *
 from controllers.poetry_control import *
 from controllers.notes_control import *
+from controllers.blog_control import *
+
 
 DEFAULT_BLUEPRINT = [
     [main, '']

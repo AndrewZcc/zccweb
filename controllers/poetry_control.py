@@ -3,7 +3,7 @@
 
 from controllers.main import *
 from models.poetry_model import Poetry, Poeter, PoetryCategory
-from utils.file_operation import *
+from utils import *
 from configs.fileserver_config import *
 from werkzeug.utils import secure_filename
 from pypinyin import lazy_pinyin
@@ -105,6 +105,12 @@ def poetry_detail(poetry_id):
 @main.route('/del_poetry/<cat_id>/<poetry_id>/', methods=['POST'])
 def del_poetry(cat_id, poetry_id):
     poetry_local = Poetry.query.filter(Poetry.id == int(poetry_id)).first()
+    if os.path.exists(poetry_local.content_path):
+        try:
+            os.remove(poetry_local.content_path)
+        except OSError:
+            pass
+
     db.session.delete(poetry_local)
     db.session.commit()
     if int(cat_id) == -1:
