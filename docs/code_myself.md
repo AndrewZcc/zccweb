@@ -5,6 +5,7 @@
 * https://www.cnblogs.com/chen0427/p/8783688.html
 * https://stackoverflow.com/questions/25948991/sqlalchemy-order-by-on-backref
 
+```python
 def logout():
     if session.get('w3account'):
         session.pop('w3account')
@@ -13,6 +14,7 @@ def logout():
 class Document(db.Model):
     author = db.relationship('User', backref=db.backref('documents', order_by='Document.create_time'))
     tags = db.relationship('Category', secondary=doc_tag, backref=db.backref('documents', order_by='Document.create_time'))
+```
 
 
 ## 基本工具
