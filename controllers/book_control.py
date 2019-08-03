@@ -139,12 +139,13 @@ def create_book(year_id):
 
             # 记录读后感
             content = request.form.get('docContent')
-            path = FILESERVER + '/reading/' + year_id + "/"
-            full_filename = path + secure_filename(''.join(lazy_pinyin(book_title))) + '.md'
-            if not os.path.exists(path):
-                os.makedirs(path)
-            sec_writefile(full_filename, content)
-            new_book.mdNotePath = full_filename
+            if content:
+                path = FILESERVER + '/reading/' + year_id + "/"
+                full_filename = path + secure_filename(''.join(lazy_pinyin(book_title))) + '.md'
+                if not os.path.exists(path):
+                    os.makedirs(path)
+                sec_writefile(full_filename, content)
+                new_book.mdNotePath = full_filename
 
             # 更新数据库
             db.session.add(book_author)

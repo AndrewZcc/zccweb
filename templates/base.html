@@ -126,12 +126,20 @@
             width  : "100%",
             height : 650,
             path   : "/static/editormd/lib/",
+            tex              : true,
+            tocm             : true,
+            emoji            : true,
+            taskList         : true,
+            codeFold         : true,
+            searchReplace    : true,
+            htmlDecode       : "style,script,iframe",
+            flowChart        : true,
+            sequenceDiagram  : true,
             onfullscreen : function() {
                 //alert("onfullscreen");
                 sidebar.style.display = "none";
             },
             onfullscreenExit : function () {
-
                 sidebar.style.display = "";
             }
         });
@@ -158,6 +166,8 @@
             flowChart: true,
             sequenceDiagram: true,
             codeFold: true,
+            tocm: true,
+            searchReplace: true,
     });});
 </script>
 
