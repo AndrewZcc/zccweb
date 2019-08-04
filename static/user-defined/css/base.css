@@ -17,8 +17,8 @@ body {
 	font-weight: bold;
 }
 
-.nav li.active{
-	background-color: #e7e7e7;
+.sidebar ul li a.active {
+    background-color: #e7e7e7;
 }
 
 .nav-tabs {

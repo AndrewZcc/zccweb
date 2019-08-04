@@ -4,11 +4,15 @@
 
 {% block sidebar %}
     {% for navCat in cat_all %}
-        <li class="navNoteCat{{ navCat.id }}">
+        <li>
             {%- if is_blog -%}
-                <a href="{{ url_for('main.blogs_cat', note_catid=navCat.id) }}">{{ navCat.name }}</a>
+                <a href="{{ url_for('main.blogs_cat', note_catid=navCat.id) }}" class="navNoteCat{{ navCat.id }}">
+                    {{ navCat.name }}
+                </a>
             {%- else -%}
-                <a href="{{ url_for('main.notes_cat', note_catid=navCat.id) }}">{{ navCat.name }}</a>
+                <a href="{{ url_for('main.notes_cat', note_catid=navCat.id) }}" class="navNoteCat{{ navCat.id }}">
+                    {{ navCat.name }}
+                </a>
             {%- endif -%}
         </li>
     {% endfor %}
