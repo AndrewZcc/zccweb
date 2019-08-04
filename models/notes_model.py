@@ -9,7 +9,7 @@ class NoteCategory(db.Model):
     __tablename__ = 'note_category'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(30), nullable=False)
-    order = db.Column(db.Integer, nullable=False, default=1)
+    cat_rank = db.Column(db.Integer, nullable=False, default=1)
 
 
 class Note(db.Model):

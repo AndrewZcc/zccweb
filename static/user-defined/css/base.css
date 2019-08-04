@@ -17,10 +17,6 @@ body {
 	font-weight: bold;
 }
 
-.sidebar ul li a.active {
-    background-color: #e7e7e7;
-}
-
 .nav-tabs {
 	margin-top: 8px;
 	border: 0 solid transparent;
