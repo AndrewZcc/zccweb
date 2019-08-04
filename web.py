@@ -7,6 +7,7 @@ from models import db
 from configs import db_config
 
 app = Flask(__name__)
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 config_blueprint(app)
 app.config.from_object(db_config)
 db.init_app(app)

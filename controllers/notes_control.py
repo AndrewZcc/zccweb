@@ -29,8 +29,11 @@ def init_note_db():
 def notes_record():
     # init_note_db()
 
-    cat_list = NoteCategory.query.filter().all()
-    cat_all = cat_list
+    cat_list = NoteCategory.query.filter().order_by(NoteCategory.cat_rank).all()
+    # cat_all = cat_list
+    cat_all = classify_by_rank(cat_list)
+    # print("After, len = %s" % len(cat_all))
+
     notes_list = []
     for cat in cat_list:
         notes = cat.notes
@@ -46,7 +49,7 @@ def notes_record():
 
 @main.route('/notes/category/<note_catid>/')
 def notes_cat(note_catid):
-    cat_all = NoteCategory.query.filter().all()
+    cat_all = classify_by_rank(NoteCategory.query.filter().order_by(NoteCategory.cat_rank).all())
     cat = NoteCategory.query.filter(NoteCategory.id == int(note_catid)).first()
     cat_list = []
     cat_list.append(cat)
@@ -65,7 +68,7 @@ def notes_cat(note_catid):
 
 @main.route('/notes/detail/<note_id>/')
 def note_detail(note_id):
-    cat_all = NoteCategory.query.filter().all()
+    cat_all = classify_by_rank(NoteCategory.query.filter().order_by(NoteCategory.cat_rank).all())
     note_local = Note.query.filter(Note.id == int(note_id)).first()
     title = note_local.title
     if note_local.content_path:
@@ -102,7 +105,7 @@ def del_note(cat_id, note_id):
 
 @main.route('/notes/edit/<cat_id>/<note_id>/', methods=['GET', 'POST'])
 def edit_note(cat_id, note_id):
-    cat_all = NoteCategory.query.filter().all()
+    cat_all = classify_by_rank(NoteCategory.query.filter().order_by(NoteCategory.cat_rank).all())
     note_local = Note.query.filter(Note.id == int(note_id)).first()
     modify_flag = False
 
@@ -162,7 +165,7 @@ def edit_note(cat_id, note_id):
 @main.route('/notes/create/<cat_id>/', methods=['GET', 'POST'])
 def create_note(cat_id):
     if request.method == 'GET':
-        cat_all = NoteCategory.query.filter().all()
+        cat_all = classify_by_rank(NoteCategory.query.filter().order_by(NoteCategory.cat_rank).all())
         note_cat = NoteCategory.query.filter(NoteCategory.id == int(cat_id)).first()
 
         dicts = {

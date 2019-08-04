@@ -3,17 +3,33 @@
 {% block title %}新增笔记{% endblock %}
 
 {% block sidebar %}
-    {% for navCat in cat_all %}
-        <li>
-            <a href="{{ url_for('main.notes_cat', note_catid=navCat.id) }}" class="navNoteCat{{ navCat.id }}">
-                {{ navCat.name }}
-            </a>
-        </li>
+    {% for navCats in cat_all %}
+        {%- if navCats|length == 1 -%}
+            {%- set navCat = navCats|first -%}
+            <li>
+                <a href="{{ url_for('main.notes_cat', note_catid=navCat.id) }}" class="navNoteCat{{ navCat.id }}">{{ navCat.name }}</a>
+            </li>
+        {%- else -%}
+            {%- set navCat = navCats|first -%}
+            <li>
+                <a href="#">{{ navCat.name }}<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    {%- for subCat in navCats -%}
+                        {%- if loop.index0 == 0 -%}{%- continue -%}{%- endif -%}
+                        <li><a href="{{ url_for('main.notes_cat', note_catid=subCat.id) }}" class="navNoteCat{{ subCat.id }}">
+                            {{ subCat.name }}</a>
+                        </li>
+                    {%- endfor -%}
+                </ul>
+            </li>
+        {%- endif -%}
     {% endfor %}
 {% endblock %}
 
 {% block content %}
-    <script>var activeCat = "{{ note_cat.id }}";</script>
+    <script>var activeCat = "{{ note_cat.id }}"; var isSubCat = 0;
+    {%- if note_cat.cat_level > 1 -%}isSubCat = 1;{%- endif -%}
+    </script>
 <div class="form-container">
     <h3 style="text-align: center;">新建笔记</h3>
     <form action="{{ url_for('main.create_note', cat_id= catid) }}" method="POST" enctype="multipart/form-data">

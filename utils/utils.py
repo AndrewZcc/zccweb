@@ -24,3 +24,25 @@ def gen_blog_url_id(length=12):
         url_id = generate_random_str(length)
 
     return url_id
+
+
+def classify_by_rank(cat_list):
+    record = 0
+    cat_all = []
+    cats = []
+
+    for c in cat_list:
+        if int(c.cat_rank) // 100 == record:
+            # print("Record[%s]: name: %s, cat_rank: %s" % (record, c.name, c.cat_rank))
+            cats.append(c)
+        else:
+            cat_all.append(cats)
+            record += 1
+            # cats.clear()
+            cats = []
+            cats.append(c)
+
+    if len(cats) != 0:
+        cat_all.append(cats)
+
+    return cat_all
