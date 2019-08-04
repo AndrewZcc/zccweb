@@ -4,8 +4,10 @@
 
 {% block sidebar %}
     {% for navCat in cat_all %}
-        <li class="navNoteCat{{ navCat.id }}">
-            <a href="{{ url_for('main.blogs_cat', note_catid=navCat.id) }}">{{ navCat.name }}</a>
+        <li>
+            <a href="{{ url_for('main.blogs_cat', note_catid=navCat.id) }}" class="navNoteCat{{ navCat.id }}">
+                {{ navCat.name }}
+            </a>
         </li>
     {% endfor %}
 {% endblock %}

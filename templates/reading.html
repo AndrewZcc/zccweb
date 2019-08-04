@@ -8,8 +8,8 @@
 
 {% block sidebar %}
     {% for year in year_all %}
-        <li class="navBookYear{{ year.year }}">
-            <a href="{{ url_for('main.reading_cat', year=year.year) }}"><i class="fa fa-fw fa-book"></i>
+        <li>
+            <a href="{{ url_for('main.reading_cat', year=year.year) }}" class="navBookYear{{ year.year }}"><i class="fa fa-fw fa-book"></i>
         {%- if year.year == 9999 -%}
             Reading
         {%- else -%}
