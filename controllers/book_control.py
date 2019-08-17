@@ -182,6 +182,11 @@ def edit_book(year_id, book_id):
             book_local.title = new_title
             modify_flag = True
 
+        if request.form.get("newImgLink"):
+            new_imageUrl = request.form.get("newImgLink")
+            book_local.imagePath = new_imageUrl
+            modify_flag = True
+
         if request.form.get('updateContent'):
             updateContent = request.form.get('updateContent')
             path = FILESERVER + '/reading/' + year_id + "/"

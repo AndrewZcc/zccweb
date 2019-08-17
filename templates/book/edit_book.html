@@ -26,7 +26,14 @@
         <p class="title">《{{ book.title }}》</p>
     </div>
 	<form action="{{ url_for('main.edit_book', year_id=book.year_id, book_id=book.id) }}" method="POST" enctype="multipart/form-data">
-		<label for="mkinput">请编辑读书笔记 (markdown 格式)</label>
+		<div class="form-group">
+            <label for="basicinfo">书籍信息 (标题 & 图片链接)</label>
+            <div>
+                <input name="newTitle" type="text" id="basicinfo" class="form-control" style="width: 400px; float: left; " placeholder="{{ book.title }}">
+                <input name="newImgLink" type="text" id="basicinfo" class="form-control" style="width: 800px; margin-left: 410px" placeholder="{{ book.imagePath }}">
+            </div>
+        </div>
+        <label for="mkinput">请编辑读书笔记 (markdown 格式)</label>
 		<div class="form-group" id="my-editor-md">
 		<textarea name="updateContent" id="mkinput" rows="30" class="form-control" placeholder="文档内容">{{ noteContent }}</textarea>
 		</div>
