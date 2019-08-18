@@ -150,8 +150,8 @@ def edit_doc(cat_id, poetry_id):
             # 保存编辑内容
             update_content = request.form.get("updateContent")
             poet_cat = poetry_local.categories[0]
-            path = FILESERVER + '/poetry/'
-            path = path + str(poet_cat.id) + secure_filename(''.join(lazy_pinyin(poet_cat.name))) + "/"
+            path = FILESERVER + PATHSEP + 'poetry' + PATHSEP
+            path = path + str(poet_cat.id) + secure_filename(''.join(lazy_pinyin(poet_cat.name))) + PATHSEP
             full_filename = path + secure_filename(''.join(lazy_pinyin(poetry_local.title))) + '.md'
 
             if not os.path.exists(full_filename):
@@ -208,7 +208,7 @@ def create_poetry(cat_id):
             poet_cat = PoetryCategory.query.filter(PoetryCategory.id == int(cat_id)).first()
             new_poetry.categories.append(poet_cat)
             # 记录内容
-            path = FILESERVER + '/poetry/' + cat_id + secure_filename(''.join(lazy_pinyin(poet_cat.name))) + "/"
+            path = FILESERVER + PATHSEP + 'poetry' + PATHSEP + cat_id + secure_filename(''.join(lazy_pinyin(poet_cat.name))) + PATHSEP
             full_filename = path + secure_filename(''.join(lazy_pinyin(title))) + '.md'
             if not os.path.exists(path):
                 os.makedirs(path)

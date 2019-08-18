@@ -140,7 +140,7 @@ def create_book(year_id):
             # 记录读后感
             content = request.form.get('docContent')
             if content:
-                path = FILESERVER + '/reading/' + year_id + "/"
+                path = FILESERVER + PATHSEP + 'reading' + PATHSEP + year_id + PATHSEP
                 full_filename = path + secure_filename(''.join(lazy_pinyin(book_title))) + '.md'
                 if not os.path.exists(path):
                     os.makedirs(path)
@@ -189,8 +189,8 @@ def edit_book(year_id, book_id):
 
         if request.form.get('updateContent'):
             updateContent = request.form.get('updateContent')
-            path = FILESERVER + '/reading/' + year_id + "/"
-            full_filename = path + secure_filename(''.join(lazy_pinyin(book_local.title))) + '.md'
+            sec_fn = secure_filename(''.join(lazy_pinyin(book_local.title))) + '.md'
+            full_filename = FILESERVER + PATHSEP + 'reading' + PATHSEP + year_id + PATHSEP + sec_fn
 
             if not os.path.exists(full_filename):
                 if book_local.mdNotePath:

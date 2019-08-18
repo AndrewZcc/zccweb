@@ -133,8 +133,8 @@ def edit_note(cat_id, note_id):
             # 保存编辑内容
             update_content = request.form.get("updateContent")
             note_cat = note_local.category
-            path = FILESERVER + '/notes/'
-            path = path + str(note_cat.id) + secure_filename(''.join(lazy_pinyin(note_cat.name))) + "/"
+            path = FILESERVER + PATHSEP + 'notes' + PATHSEP
+            path = path + str(note_cat.id) + secure_filename(''.join(lazy_pinyin(note_cat.name))) + PATHSEP
             full_filename = path + secure_filename(''.join(lazy_pinyin(note_local.title))) + '.md'
 
             if not os.path.exists(full_filename):
@@ -191,7 +191,7 @@ def create_note(cat_id):
 
             # 记录内容
             content = request.form.get('docContent')
-            path = FILESERVER + '/notes/' + cat_id + secure_filename(''.join(lazy_pinyin(note_cat.name))) + "/"
+            path = FILESERVER + PATHSEP + 'notes' + PATHSEP + cat_id + secure_filename(''.join(lazy_pinyin(note_cat.name))) + PATHSEP
             full_filename = path + secure_filename(''.join(lazy_pinyin(title))) + '.md'
             if not os.path.exists(path):
                 os.makedirs(path)

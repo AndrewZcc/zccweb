@@ -2,3 +2,4 @@
 # -*- encoding: utf-8 -*-
 
 FILESERVER = "/Users/zhchuch/SpaceZ/WebFileServer"
+PATHSEP = "/"

@@ -133,8 +133,8 @@ def edit_blog(cat_id, url_id):
             # 保存编辑内容
             update_content = request.form.get("updateContent")
             note_cat = blog_local.category
-            path = FILESERVER + '/blogs/'
-            path = path + str(note_cat.id) + secure_filename(''.join(lazy_pinyin(note_cat.name))) + "/"
+            path = FILESERVER + PATHSEP + 'blogs' + PATHSEP
+            path = path + str(note_cat.id) + secure_filename(''.join(lazy_pinyin(note_cat.name))) + PATHSEP
             full_filename = path + secure_filename(''.join(lazy_pinyin(blog_local.title))) + '.md'
 
             if not os.path.exists(full_filename):
@@ -193,7 +193,7 @@ def create_blog(cat_id):
 
             # 记录内容
             content = request.form.get('docContent')
-            path = FILESERVER + '/blogs/' + cat_id + secure_filename(''.join(lazy_pinyin(note_cat.name))) + "/"
+            path = FILESERVER + PATHSEP + 'blogs' + PATHSEP + cat_id + secure_filename(''.join(lazy_pinyin(note_cat.name))) + PATHSEP
             full_filename = path + secure_filename(''.join(lazy_pinyin(title))) + '.md'
             if not os.path.exists(path):
                 os.makedirs(path)
