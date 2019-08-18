@@ -51,9 +51,11 @@
                     <li class="nav-item mainNavLi mainNavLiBlogs">
                         <a class="nav-link" href="{{ url_for('main.blogs_record') }}">博 客</a>
                     </li>
+                    {% if session.get('username') and authority == "Root" %}
                     <li class="nav-item mainNavLi mainNavLiNotes">
                         <a class="nav-link" href="{{ url_for('main.notes_record') }}">笔 记</a>
                     </li>
+                    {% endif %}
                     <li class="nav-item mainNavLi mainNavLiPoetry">
                         <a class="nav-link" href="{{ url_for('main.poetry') }}">诗 歌</a>
                     </li>

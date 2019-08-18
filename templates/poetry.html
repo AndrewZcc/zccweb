@@ -40,7 +40,9 @@
                             <th width="100px">标题</th>
                             <th width="1px">诗人</th>
                             <th width="2px">时间</th>
+                            {%- if session.get('username') and authority == "Root" -%}
                             <th width="1px">操作</th>
+                            {%- endif -%}
                         </tr>
                         </thead>
                         <tbody>
@@ -56,6 +58,7 @@
                             <td>{{ poetInNum }}</td>
                             <td>
                                 <a href="{{ url_for('main.poetry_detail', poetry_id=poetry.id) }}">{{ poetry.title }}</a>
+                                {%- if session.get('username') and authority == "Root" -%}
                                 <!-- 按钮触发模态框 -->
                                 <button class="btn-default" data-toggle="modal" data-target="#myModal{{ poetCatNum }}{{ poetInNum }}">重命名</button>
                                 <!-- 模态框（Modal） -->
@@ -81,6 +84,7 @@
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal -->
                                 </div>
+                                {%- endif -%}
                             </td>
                             <td>{{ poetry.poet.name }}
                                 {% if poetry.poet.state %}
@@ -88,6 +92,7 @@
                                 {%- endif -%}
                             </td>
                             <td>{{ poetry.create_time }}</td>
+                            {%- if session.get('username') and authority == "Root" -%}
                             <td>
                                 <div style="float: left">
                                     <form action="{{ url_for('main.del_poetry', cat_id=catid_local, poetry_id=poetry.id) }}" method="POST">
@@ -100,8 +105,10 @@
                                     </form>
                                 </div>
                             </td>
+                            {%- endif -%}
                         </tr>
                         {%- endfor -%}
+                        {%- if session.get('username') and authority == "Root" -%}
                         <tr>
                             <td></td>
                             <td>
@@ -115,6 +122,7 @@
                             <td></td>
                             <td></td>
                         </tr>
+                        {%- endif -%}
                         </tbody>
                     </table>
                 </div>

@@ -57,6 +57,7 @@
                     <br><i class="fa fa-thumbs-o-up" aria-hidden="true"> <font style="font-style: normal; color: #E94F06;">{{ book.likes }}</font> 赞</i>
                     {%- if book.eBookPath -%}<a href="{{ book.eBookPath }}" target="_blank" style="margin-left: 5px;">eBook</a>{%- endif -%}
                     {%- if book.one_sentence -%}<br>· {{ book.one_sentence }}{%- endif -%}
+                    {%- if session.get('username') and authority == "Root" -%}
                     <div>
                         <div style="float: left;">
                             <form action="{{ url_for('main.edit_book', year_id=book.year_id, book_id=book.id) }}" method="GET">
@@ -76,6 +77,7 @@
                             </form>
                         </div>
                     </div>
+                    {%- endif -%}
                 </p>
                 <br><div style="margin-top: 20px;"> </div><br>
             </td>
@@ -93,11 +95,13 @@
     </table>
 </ol>
 <hr>
+{%- if session.get('username') and authority == "Root" -%}
 <div style="text-align: center; padding-bottom: 20px;">
     <form action="{{ url_for('main.create_book', year_id=activeYear.year) }}" method="GET">
         <button type="submit" class="btn btn-success">新增书籍</button>
     </form>
 </div>
+{%- endif -%}
 </div>
 {% endblock %}
 

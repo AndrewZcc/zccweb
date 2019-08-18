@@ -11,8 +11,9 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     # return redirect(url_for('main.reading'))
+    return redirect(url_for('main.blogs_record'))
     # return redirect(url_for('main.poetry'))
-    return redirect(url_for('main.notes_record'))
+    # return redirect(url_for('main.notes_record'))
 
 
 @main.route('/login/', methods=['GET', 'POST'])
@@ -68,8 +69,20 @@ def register():
                 return redirect(url_for('main.index'))
 
 
-# TODO: 使用 全局 g 对象
+# TODO: 使用 全局 g 对象 (其实这里的g对象 只是一个单次请求的全局变量，而非多次请求)
 # TODO: 向全局传递 selected_navbar, years, poetry_categories 信息
-# TODO: base.html 可通过访问 g对象 动态生成 侧边栏！
+# TODO: 使用 上下文处理器 (context_processor) 设置真正的全局统一环境变量 (global)
 # TODO: 替代方案：使用 session (不推荐)！
 
+@main.context_processor
+def set_context():
+    username = session.get('username')
+    if username:
+        user = User.query.filter(User.username == username).first()
+        dicts = {
+            'username': user.username,
+            'authority': user.authority
+        }
+        return dicts
+    else:
+        return {}
