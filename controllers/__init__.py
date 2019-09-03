@@ -6,6 +6,7 @@ from controllers.book_control import *
 from controllers.poetry_control import *
 from controllers.notes_control import *
 from controllers.blog_control import *
+from controllers.web_tools import *
 
 
 DEFAULT_BLUEPRINT = [

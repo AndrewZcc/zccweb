@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}Rpm Search{% endblock %}
+
+{% block content %}
+    <div id="doc-content">
+        <script>
+            var activeSelectB = "BVersion{{ dirs[0] }}";
+            {% if active_v %}
+            activeSelectB = "BVersion{{ active_v }}";
+            {% endif %}
+        </script>
+        <form class="form-content" action="" method="post">
+            <div class="form-group required">
+                <label for="so_file" class="star-label">请输入您想查找的 so 文件名</label>
+			    <input type="text" id="so_file" class="form-control" name="soFileName" placeholder="输入 so 文件名">
+            </div>
+            <div class="form-group required">
+                <label for="BVersion" class="star-label">请选择对应的 B版本</label>
+                <select name="bVersion" id="BVersion" style="margin-left: 10px">
+                    {% for dir in dirs %}
+                    <option class="BVersion{{ dir }}" value="{{ dir }}">{{ dir }}</option>
+                    {%- endfor -%}
+                    <option class="BVersionAll" value="All">All</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">查找 对应 PRM包</button>
+            </div>
+            {% with messages = get_flashed_messages() %}
+                <div class="form-group">
+                {% if messages %}
+                    <ul class="flash" style="padding-left: 0px">
+                        {% for message in messages %}
+                            {% if message == "ok" %}
+                            <div class="alert alert-success">
+                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                <strong>{{ so_file }} 文件属于: <br>
+                                    {%- for k, v in search_res.items() -%}
+                                        {% if v|length != 0 %}
+                                            <div style="margin-top: 3px">{{ k|e }}</div>
+                                            <ul>
+                                            {% for rpm in v %}
+                                            <li>{{ rpm|e }}</li>
+                                            {%- endfor -%}
+                                            </ul>
+                                        {%- endif -%}
+                                    {%- endfor -%}
+                                </strong>
+                            </div>
+                            {% elif message == "error" %}
+                            <div class="alert alert-danger" style="text-align: center">
+                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                <strong>文件 {{ so_file }} 未找到!</strong>
+                            </div>
+                            {% elif message == "error_input" %}
+                            <div class="alert alert-danger" style="text-align: center">
+                                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                <strong>ERROR：so文件 或 B版本 为空!</strong>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                </div>
+            {% endwith %}
+        </form>
+    </div>
+{% endblock %}
+
+{% block jsscript %}
+    <script type="text/javascript">
+        var selected = document.getElementsByClassName(activeSelectB)[0];
+        selected.setAttribute("selected", "selected")
+    </script>
+{% endblock %}
