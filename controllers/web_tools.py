@@ -4,10 +4,10 @@
 from controllers.main import main
 from flask import render_template, redirect, url_for, request, flash
 from configs.fileserver_config import *
-import os, xmltodict
+import os, xmltodict, re
 
 
-@main.route('/search/rpm2so/', methods=['GET', 'POST'])
+@main.route('/search/rpm', methods=['GET', 'POST'])
 def search_rpm():
     root_dir = FILESERVER + os.sep + "webtools"
     dirs = ""
@@ -33,19 +33,32 @@ def search_rpm():
 
         search_res = {}
         for version in search_version:
-            xml_path = root_dir + os.sep + version + os.sep + "rpm-file-list.xml"
+            xml_root = root_dir + os.sep + version
             res_rpm = []
-            with open(xml_path) as fd:
-                xml = xmltodict.parse(fd.read())
-                packages = xml["filelists"]["package"]
-                for pack in packages:
-                    files = pack["file"]
-                    for file in files:
-                        if str(file).find(so_file_name) >= 0:
-                            rpm_file_name = pack["@name"]
-                            # print("so: %s, rpm: %s" % (so_file_name, rpm_file_name))
-                            res_rpm.append(rpm_file_name + ".rpm")
-                            break
+            for main_dir, subdir, rpm_file_list in os.walk(xml_root):
+                for rpm_file in rpm_file_list:
+                    if rpm_file.startswith("rpm"):
+                        xml_path = xml_root + os.sep + rpm_file
+                        with open(xml_path) as fd:
+                            xml = xmltodict.parse(fd.read())
+                            packages = xml["filelists"]["package"]
+                            for pack in packages:
+                                pack.setdefault("file", [])
+                                files = pack["file"]
+                                for file in files:
+                                    # Regular Expression Match
+                                    reg = so_file_name.replace(".", "\\.")
+                                    try:
+                                        regular = re.search(reg, str(file))
+                                    except Exception:
+                                        regular = None
+                                    # print("match-reg: %s" % reg)
+                                    if regular:
+                                        # print(">>> %s" % regular)
+                                        rpm_file_name = pack["@name"]
+                                        res_rpm.append(rpm_file_name + ".rpm")
+                                        break
+
             if len(res_rpm) != 0:
                 search_res[version] = res_rpm
 
