@@ -40,8 +40,12 @@
                                             <div style="margin-top: 3px">{{ k|e }}</div>
                                             <ul>
                                                 {% for rpm in v %}
-                                                <li>{{ search_restype[k][loop.index0] }}: <u>{{ rpm|e }}</u></li>
+                                                <li>{{ search_restype[k][loop.index0] }}:
+                                                    <button disabled data-toggle="tooltip" data-placement="right" title="责任人: {{ search_resowner[k][loop.index0] }}"
+                                                     style="border: 0; background-color: transparent;"><u>{{ rpm|e }}</u></button>
+                                                </li>
                                                 {%- endfor -%}
+                                                <li>pnf: &nbsp; No Owner Li Test</li>
                                             </ul>
                                         {%- endif -%}
                                     {%- endfor -%}
@@ -70,6 +74,6 @@
 {% block jsscript %}
     <script type="text/javascript">
         var selected = document.getElementsByClassName(activeSelectB)[0];
-        selected.setAttribute("selected", "selected")
+        selected.setAttribute("selected", "selected");
     </script>
 {% endblock %}
