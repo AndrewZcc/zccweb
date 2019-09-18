@@ -39,9 +39,9 @@
                                         {% if v|length != 0 %}
                                             <div style="margin-top: 3px">{{ k|e }}</div>
                                             <ul>
-                                            {% for rpm in v %}
-                                            <li>{{ rpm|e }}</li>
-                                            {%- endfor -%}
+                                                {% for rpm in v %}
+                                                <li>{{ search_restype[k][loop.index0] }}: <u>{{ rpm|e }}</u></li>
+                                                {%- endfor -%}
                                             </ul>
                                         {%- endif -%}
                                     {%- endfor -%}

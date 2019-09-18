@@ -32,9 +32,11 @@ def search_rpm():
             search_version.append(b_version)
 
         search_res = {}
+        search_restype = {}
         for version in search_version:
             xml_root = root_dir + os.sep + version
             res_rpm = []
+            res_rpmtype = []
             for main_dir, subdir, rpm_file_list in os.walk(xml_root):
                 for rpm_file in rpm_file_list:
                     if rpm_file.startswith("rpm"):
@@ -57,16 +59,19 @@ def search_rpm():
                                         # print(">>> %s" % regular)
                                         rpm_file_name = pack["@name"]
                                         res_rpm.append(rpm_file_name + ".rpm")
+                                        res_rpmtype.append(rpm_file.split('.')[0][14:])
                                         break
 
             if len(res_rpm) != 0:
                 search_res[version] = res_rpm
+                search_restype[version] = res_rpmtype
 
         dicts = {
             'dirs': dirs,
             'active_v': b_version,
             'so_file': so_file_name,
-            'search_res': search_res
+            'search_res': search_res,
+            'search_restype': search_restype
         }
 
         if not len(search_res):
