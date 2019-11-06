@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Product Infos.{% endblock %}
+{% block link %}
+    <style type="text/css">
+        .rpmContent {
+            margin: 10px auto;
+            display: none;
+        }
+
+        .rpmContent.show {
+            display:block;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">产品信息树 <small>V 1.0</small></h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-3">
+                    {# 侧边栏 #}
+                    <ul class="nav nav-pills nav-stacked" style="border-right: solid 1px #EEE">
+                        <li role="presentation" id="bar-2">
+                            <a href="#docCollapse" class="nav-header collapsed" data-toggle="collapse"
+                               id="collapseParent" onclick="chevron_toggle()">Bar 2<span
+                                    class="pull-right glyphicon glyphicon-chevron-down"></span></a>
+                            <ul id="docCollapse" class="nav nav-list collapse">
+                                {% for k, v in rpm_list.items() %}
+                                <li><a class="rpmLink" style="color: black">{{ k }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-8">
+                    {# 内容栏 #}
+                    {% for k, v in rpm_list.items() %}
+                    <div class="rpmContent panel panel-default">
+                        <div class="panel-heading">{{ k }}</div>
+                        <div class="panel-body">
+                            <table>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>文件名</th>
+                                    <th>MD5</th>
+                                    <th>文件大小</th>
+                                </tr>
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ v["name"] }}</td>
+                                    <td>{{ v["md5sum"] }}</td>
+                                    <td>{{ v["size"] }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="rpmContent show">
+                        PRM 信息展示区，请从左侧选择你想查看的rpm。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block jsscript %}
+    <script type="text/javascript">
+        var rpm_links = document.getElementsByClassName("rpmLink");
+        var contents = document.getElementsByClassName("rpmContent");
+        // 遍历每个 rpm link 为其添加点击事件
+        for(var i=0; i< rpm_links.length; i++) {
+            rpm_links[i].index = i;
+            rpm_links[i].onclick = function () {
+                for (var j = 0; j < rpm_links.length; j++) {
+                    rpm_links[j].className = rpm_links[j].className.replace(' active', '').trim();
+                }
+                for (j = 0; j < contents.length; j++) {
+                    contents[j].className = contents[j].className.replace(' show', '').trim();
+                }
+
+                this.className = this.className + ' active';
+                contents[this.index].className = contents[this.index].className + ' show';
+            };
+        }
+
+        function chevron_toggle() {
+            $("#collapseParent").find("span").toggleClass("glyphicon-chevron-up");
+            $("#collapseParent").find("span").toggleClass("glyphicon-chevron-down");
+        }
+    </script>
+{% endblock %}

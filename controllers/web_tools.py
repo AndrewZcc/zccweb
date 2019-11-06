@@ -7,6 +7,19 @@ from configs.fileserver_config import *
 import os, xmltodict, re
 
 
+@main.route('/product/infos/')
+def product_infos():
+    rpm_list = dict()
+    rpm_list["a.rpm"] = {"name": "a.rpm", "md5sum": "21aef2", "size": "100K"}
+    rpm_list["b.rpm"] = {"name": "b.rpm", "md5sum": "43aef4", "size": "123K"}
+    return render_template('webtools/product_info.html', rpm_list=rpm_list)
+
+
+@main.route('/product/test/')
+def temp_test():
+    return render_template('webtools/js_adjust_pageContent.html')
+
+
 @main.route('/search/rpm', methods=['GET', 'POST'])
 def search_rpm():
     root_dir = FILESERVER + os.sep + "webtools"
