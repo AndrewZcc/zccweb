@@ -87,7 +87,7 @@ def file_downloader():
     root.appendChild(package_name_delta)
     root.appendChild(package_file_delta)
 
-    print(root.toprettyxml(indent='\t'))
+    # print(root.toprettyxml(indent='\t'))
 
     os.chdir(file_path)
     if os.path.exists(filename):
@@ -99,3 +99,19 @@ def file_downloader():
         send_from_directory(file_path, filename.encode('utf-8').decode('utf-8'), as_attachment=True))
     response.headers["Content-Disposition"] = "attachment; filename={}".format(filename.encode().decode('latin-1'))
     return response
+
+
+def xml2string(path):
+    result = ''
+    with open(path, 'r') as f:
+        for line in f.readlines():
+            line = line.strip()
+            result += line
+    return result
+
+
+@main.route('/xml/editor/')
+def xml_editor():
+    xml_path = os.path.join(FILE_DIR, "delta.xml")
+    xml_string = xml2string(xml_path)
+    return render_template('webtools/xml_editor.html', xml=xml_string)
