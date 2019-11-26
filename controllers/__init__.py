@@ -7,6 +7,7 @@ from controllers.poetry_control import *
 from controllers.notes_control import *
 from controllers.blog_control import *
 from controllers.web_tools import *
+from controllers.file_server import *
 
 
 DEFAULT_BLUEPRINT = [
