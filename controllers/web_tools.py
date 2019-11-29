@@ -15,7 +15,7 @@ def product_infos():
     return render_template('webtools/product_info.html', rpm_list=rpm_list)
 
 
-@main.route('/product/test/')
+@main.route('/js/switch/example/')
 def temp_test():
     return render_template('webtools/js_adjust_pageContent.html')
 

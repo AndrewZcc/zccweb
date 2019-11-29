@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='user-defined/css/base.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap-table.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='user-defined/css/poetry.css') }}">
+</head>
+<body>
+    <div class="page-content">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{ title }}
+            </div>
+            <div class="panel-body">
+                <embed src="{{ url_for('static', filename='games/swf/') }}{{ name }}" width="1400px" height="700px">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
