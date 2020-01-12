@@ -97,3 +97,8 @@ def search_rpm():
         else:
             flash("ok")
         return render_template('webtools/rpmsearch.html', **dicts)
+
+
+@main.route('/product/infos/')
+def ext_js_panel():
+    return render_template('webtools/extjs_panel.html')

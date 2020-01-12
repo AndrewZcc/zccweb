@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}产品信息树{% endblock %}
+
+{% block link %}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/classic/theme-crisp/resources/theme-crisp-all.css"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.0.0/ext-all.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='user-defined/js/infotree_extjs.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='user-defined/css/poetry.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+<div class="panel panel-default">
+    <div class="panel-heading">产品信息树 V2.0</div>
+    <div class="panel-body">
+        <div id="productInfos"></div>
+    </div>
+</div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block jsscript %}
+    <script>
+        var baseLi = document.getElementsByClassName('mainNavLiGames')[0];
+        baseLi.className = baseLi.className + " active";
+    </script>
+{% endblock %}
