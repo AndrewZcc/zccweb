@@ -9,6 +9,7 @@ from controllers.blog_control import *
 from controllers.web_tools import *
 from controllers.file_server import *
 from controllers.games import *
+from controllers.tools import *
 
 
 DEFAULT_BLUEPRINT = [

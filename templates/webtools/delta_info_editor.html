@@ -1,0 +1,53 @@
+{% extends 'private_base.html' %}
+{% block title %}Delta Editor{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">Info Editor</div>
+            <div class="panel-body">
+                <form action="" method="POST">
+                    {% for k, v in data.items() %}
+                        {% if v is string %}
+                        <div class="form-group required">
+                            <label for="delta1" class="star-label">{{ k }}</label>
+                            <input type="text" id="delta1" class="form-control" name="delta1" value="{{ v }}" disabled="disabled">
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    <hr>
+
+                    {% set delta_info = data['delta_info'] %}
+                    {% for file in delta_info %}
+                        {% set out_counter = loop.index %}
+                        {% if file['type'] != "modified" %}
+                        <div class="form-group required">
+                            <label for="reason" class="star-label">{{ file['name'] }}</label>
+                            <input type="text" id="reason" class="form-control"
+                                   name="reason{{ out_counter }}" value="{{ file['reason'] }}" required="required">
+                        </div>
+                        {% else %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading">{{ file['name'] }}</div>
+                                <div class="panel-body">
+                                {% for func in file['funcs'] %}
+                                    {% set in_counter = loop.index %}
+                                    <div class="form-group required">
+                                        <label for="reason" class="star-label">{{ func['name'] }}</label>
+                                        <input type="text" id="reason" class="form-control"
+                                               name="reason{{ out_counter }}{{ in_counter }}" value="{{ func['reason'] }}" required="required">
+                                    </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <input type="submit" class="btn btn-success" value="Commit">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
