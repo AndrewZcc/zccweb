@@ -10,6 +10,7 @@ from controllers.web_tools import *
 from controllers.file_server import *
 from controllers.games import *
 from controllers.tools import *
+from controllers.webpage2_0 import *
 
 
 DEFAULT_BLUEPRINT = [
