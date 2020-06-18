@@ -9,6 +9,7 @@ from werkzeug.utils import secure_filename
 from pypinyin import lazy_pinyin
 from utils import *
 import os
+import time
 
 
 def init_book_db():
@@ -136,6 +137,8 @@ def create_book(year_id):
             eBookPath = request.form.get('eBookPath')
             if eBookPath:
                 new_book.eBookPath = eBookPath
+
+            new_book.finish_date = str(time.strftime("%Y-%m-%d"))
 
             # 记录读后感
             content = request.form.get('docContent')

@@ -39,3 +39,18 @@ def delta_info_editor(id):
             return "success"
         else:
             return 'Error! No Delta Info Exist!'
+
+
+@main.route('/ajax/form/', methods=['GET', 'POST'])
+def ajax_test():
+    if request.method == "GET":
+        pass
+    else:
+        # POST Method
+        pass
+
+
+@main.route('/d3/test/', methods=['GET', 'POST'])
+def d3_test():
+    if request.method == "GET":
+        return render_template('webtools/d3_test.html')

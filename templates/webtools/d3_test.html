@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}ajax Test{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                D3效果测试
+            </div>
+            <div class="panel-body">
+                <p>Hello D3!</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block jsscript %}
+    <script>
+        var baseLi = document.getElementsByClassName('')[0];
+        baseLi.className = baseLi.className + " active";
+    </script>
+    <script>
+        d3.select("body").select("p").text("TEST D3 Funcs!");
+    </script>
+{% endblock %}
