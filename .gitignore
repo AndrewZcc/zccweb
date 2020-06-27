@@ -3,3 +3,4 @@ __pycache__/
 utils/migrations/
 static/games/
 *.pyc
+nohup.out
