@@ -139,6 +139,7 @@
 <script src="{{ url_for('static', filename='user-defined/js/base.js') }}" type="text/javascript"></script>
 
 <script src="{{ url_for('static', filename='editormd/editormd.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='user-defined/js/uploadfile.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     var sidebar = document.getElementsByClassName("sidebar")[0];
 
@@ -156,6 +157,12 @@
             htmlDecode       : "style,script,iframe",
             flowChart        : true,
             sequenceDiagram  : true,
+            imageUpload      : true,
+            imageFormats     :["jpg", "jpeg", "png", "bmp", "webp"],
+            imageUploadURL   : {{ url_for('main.upload') }},
+            onload:function(){
+                initPasteDragImg(this)
+            },
             onfullscreen : function() {
                 //alert("onfullscreen");
                 sidebar.style.display = "none";

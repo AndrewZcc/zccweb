@@ -8,6 +8,7 @@ from utils import *
 
 from werkzeug.utils import secure_filename
 from pypinyin import lazy_pinyin
+import datetime
 import os
 
 
@@ -202,3 +203,44 @@ def create_note(cat_id):
             db.session.commit()
 
         return redirect(url_for('main.notes_cat', note_catid=int(cat_id)))
+
+
+@main.route('/upload/', methods=['POST'])
+def upload():
+    file = request.files.get('editormd-file')
+    if not file:
+        result = {
+            'success': 0,
+            'message': '上传失败'
+        }
+    else:
+        filename, upload_time = request.form.get('filename'), request.form.get('upload-time')
+        filedir = os.path.join(FILESERVER, "md_files")
+        if file.mimetype.find('image') >= 0:
+            file_type = "image"
+            fn_2 = upload_time + '-' + datetime.datetime.now().strftime('%Y%m%d%H%M%S') + os.path.splitext(filename)[1]
+            filename = fn_2
+        else:
+            file_type = "files"
+        # print(filename)
+        filedir = os.path.join(filedir, file_type)
+        if not os.path.exists(filedir):
+            os.makedirs(filedir)
+        file.save(os.path.join(filedir, filename))
+        result = {
+            'success': 1,
+            'message': '上传成功!',
+            'filename': filename,
+            'filetype': file_type,
+            'url': url_for('main.image', type=file_type, name=filename)
+        }
+    return jsonify(result)
+
+
+@main.route('/md/<type>/<name>', methods=['GET'])
+def image(type, name):
+    filedir = os.path.join(FILESERVER, "md_files", type)
+    # with open(os.path.join(filedir, name), 'rb') as f:
+    #     resp = Response(f.read(), mimetype="image/jpeg")
+    # return resp
+    return send_from_directory(filedir, filename=name)
