@@ -29,4 +29,24 @@ def game(name):
         read_game_info()
     real_title = game_dict[name]['title']
     real_name = game_dict[name]['name']
-    return render_template('games/games_tmplt.html', title=real_title, name=real_name)
+    return render_template('games/game.html', title=real_title, name=real_name)
+
+
+@main.route("/datalake/statistic")
+def datalake_statistic():
+    data = {
+        "组织域": ['url1', 'url2'],
+        "归档域": ['url1', 'url2'],
+        "开发域": 'NA',
+        "构建域": 'NA',
+        "需求域": 'NA',
+        "测试域": 'NA',
+        "设计域": 'NA'
+    }
+
+    links = {
+        "天眼": "god-eye.data.com",
+        "云杉搜索": "yunshan.rnd.huawei.com"
+    }
+
+    return render_template('datalake/statistic.html', data=data, links=links)

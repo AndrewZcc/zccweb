@@ -1,0 +1,103 @@
+{% extends "simple_tmplt.html" %}
+
+{% block title %}数据底座资产统计{% endblock %}
+
+<!--
+简洁版 样例网址：https://seiyria.com/bootstrap-slider/
+bootstap4 使用说明文档：https://v4.bootcss.com/docs/4.0/layout/grid/
+-->
+
+{% block style %}
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            text-align: left;
+            padding: 0;
+        }
+        tr:nth-child(even){background-color: #e5e5e5}
+        th {
+            background-color: #00008B;
+            color: white;
+            padding: 4px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div id="top" class="jumbotron" style="padding-top: 3em; padding-bottom: 2em; margin-bottom: 10px">
+            <h1>云杉数据湖&ensp;<small>数字驱动研发效率提升</small>
+            </h1>
+            <p class="lead">
+                —— 珠峰会战 · 数字工程团队
+            </p>
+            <p>愿景：xxx</p>
+            <p>关键路标(2021)：70%</p>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card border-success">
+                    <div class="card-header">
+                        数字资产
+                    </div>
+                    <div class="card-body">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>归属域</th>
+                                    <th>相关信息</th>
+                                </tr>
+                                {% for domain, urls in data.items() %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                    {% if urls == "NA" %}
+                                        <td>{{ domain }}</td><td>NA</td>
+                                    {% else %}
+                                        <td>{{ domain }}</td>
+                                        <td><a href="{{ urls[0] }}" class="btn btn-outline-secondary btn-sm" target="_blank">数据资产</a>
+                                        <a href="{{ urls[1] }}" class="btn btn-outline-info btn-sm" target="_blank">统计信息</a></td>
+                                    {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card border-danger">
+                    <div class="card-header">
+                        关键应用
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card border-secondary">
+                    <div class="card-body text-secondary">
+                        <small>
+                        <b>相关链接：</b>
+                            <ul>
+                                {% for title, link in links.items() %}
+                                    <li>{{ title }}: <a href="{{ link }}" target="_blank">{{ link }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

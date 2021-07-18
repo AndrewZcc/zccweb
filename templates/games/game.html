@@ -1,0 +1,16 @@
+{% extends 'simple_tmplt.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    <div class="page-content">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{ title }}
+            </div>
+            <div class="panel-body">
+                <embed src="{{ url_for('static', filename='games/swf/') }}{{ name }}" width="1400px" height="700px">
+            </div>
+        </div>
+    </div>
+{% endblock %}
